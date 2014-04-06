@@ -1,4 +1,4 @@
-﻿namespace WebMConverter
+namespace WebMConverter
 {
     partial class MainForm
     {
@@ -94,7 +94,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 86F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(699, 348);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(699, 349);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // groupBox1
@@ -104,7 +104,7 @@
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(693, 80);
-            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Main";
             // 
@@ -137,7 +137,7 @@
             this.buttonBrowseOut.Location = new System.Drawing.Point(545, 33);
             this.buttonBrowseOut.Name = "buttonBrowseOut";
             this.buttonBrowseOut.Size = new System.Drawing.Size(62, 25);
-            this.buttonBrowseOut.TabIndex = 10;
+            this.buttonBrowseOut.TabIndex = 5;
             this.buttonBrowseOut.Text = "Browse";
             this.buttonBrowseOut.UseVisualStyleBackColor = true;
             this.buttonBrowseOut.Click += new System.EventHandler(this.buttonBrowseOut_Click);
@@ -148,7 +148,7 @@
             this.textBoxOut.Location = new System.Drawing.Point(72, 35);
             this.textBoxOut.Name = "textBoxOut";
             this.textBoxOut.Size = new System.Drawing.Size(467, 20);
-            this.textBoxOut.TabIndex = 7;
+            this.textBoxOut.TabIndex = 4;
             // 
             // label4
             // 
@@ -178,7 +178,7 @@
             this.textBoxIn.Location = new System.Drawing.Point(72, 5);
             this.textBoxIn.Name = "textBoxIn";
             this.textBoxIn.Size = new System.Drawing.Size(467, 20);
-            this.textBoxIn.TabIndex = 4;
+            this.textBoxIn.TabIndex = 1;
             // 
             // buttonGo
             // 
@@ -187,7 +187,7 @@
             this.buttonGo.Name = "buttonGo";
             this.tableLayoutPanel2.SetRowSpan(this.buttonGo, 2);
             this.buttonGo.Size = new System.Drawing.Size(71, 55);
-            this.buttonGo.TabIndex = 8;
+            this.buttonGo.TabIndex = 6;
             this.buttonGo.Text = "Convert";
             this.buttonGo.UseVisualStyleBackColor = true;
             this.buttonGo.Click += new System.EventHandler(this.buttonGo_Click);
@@ -198,7 +198,7 @@
             this.buttonBrowseIn.Location = new System.Drawing.Point(545, 3);
             this.buttonBrowseIn.Name = "buttonBrowseIn";
             this.buttonBrowseIn.Size = new System.Drawing.Size(62, 24);
-            this.buttonBrowseIn.TabIndex = 9;
+            this.buttonBrowseIn.TabIndex = 2;
             this.buttonBrowseIn.Text = "Browse";
             this.buttonBrowseIn.UseVisualStyleBackColor = true;
             this.buttonBrowseIn.Click += new System.EventHandler(this.buttonBrowseIn_Click);
@@ -209,8 +209,8 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(3, 89);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(693, 256);
-            this.groupBox2.TabIndex = 2;
+            this.groupBox2.Size = new System.Drawing.Size(693, 257);
+            this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Configuration";
             // 
@@ -226,7 +226,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 47F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(687, 237);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(687, 238);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // groupBox4
@@ -235,7 +235,7 @@
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(3, 50);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(681, 184);
+            this.groupBox4.Size = new System.Drawing.Size(681, 185);
             this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Video";
@@ -271,7 +271,7 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(675, 165);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(675, 166);
             this.tableLayoutPanel5.TabIndex = 1;
             // 
             // tableLayoutPanel7
@@ -287,16 +287,16 @@
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(139, 33);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(139, 34);
             this.tableLayoutPanel7.TabIndex = 21;
             // 
             // boxLimit
             // 
             this.boxLimit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.boxLimit.Location = new System.Drawing.Point(3, 6);
+            this.boxLimit.Location = new System.Drawing.Point(3, 7);
             this.boxLimit.Name = "boxLimit";
             this.boxLimit.Size = new System.Drawing.Size(93, 20);
-            this.boxLimit.TabIndex = 5;
+            this.boxLimit.TabIndex = 0;
             // 
             // label16
             // 
@@ -304,8 +304,8 @@
             this.label16.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label16.Location = new System.Drawing.Point(102, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(34, 33);
-            this.label16.TabIndex = 0;
+            this.label16.Size = new System.Drawing.Size(34, 34);
+            this.label16.TabIndex = 1;
             this.label16.Text = "MB";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -315,8 +315,8 @@
             this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label15.Location = new System.Drawing.Point(3, 132);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(70, 33);
-            this.label15.TabIndex = 20;
+            this.label15.Size = new System.Drawing.Size(70, 34);
+            this.label15.TabIndex = 11;
             this.label15.Text = "Size limit:";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -327,7 +327,7 @@
             this.label9.Location = new System.Drawing.Point(218, 66);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(454, 33);
-            this.label9.TabIndex = 19;
+            this.label9.TabIndex = 8;
             this.label9.Text = "How long the video should take. Leave blank for everything up to the end. Either " +
     "use notation HH:MM:SS or just the amount of seconds.";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -338,7 +338,7 @@
             this.boxCropFrom.Location = new System.Drawing.Point(79, 39);
             this.boxCropFrom.Name = "boxCropFrom";
             this.boxCropFrom.Size = new System.Drawing.Size(133, 20);
-            this.boxCropFrom.TabIndex = 18;
+            this.boxCropFrom.TabIndex = 4;
             // 
             // boxCropTo
             // 
@@ -346,7 +346,7 @@
             this.boxCropTo.Location = new System.Drawing.Point(79, 72);
             this.boxCropTo.Name = "boxCropTo";
             this.boxCropTo.Size = new System.Drawing.Size(133, 20);
-            this.boxCropTo.TabIndex = 17;
+            this.boxCropTo.TabIndex = 7;
             // 
             // label7
             // 
@@ -355,7 +355,7 @@
             this.label7.Location = new System.Drawing.Point(3, 66);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(70, 33);
-            this.label7.TabIndex = 16;
+            this.label7.TabIndex = 6;
             this.label7.Text = "Crop length:";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -365,8 +365,8 @@
             this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label6.Location = new System.Drawing.Point(218, 132);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(454, 33);
-            this.label6.TabIndex = 15;
+            this.label6.Size = new System.Drawing.Size(454, 34);
+            this.label6.TabIndex = 12;
             this.label6.Text = "Will adjust the quality to attempt to stay below this limit, and cut off the end " +
     "of a video if needed. Leave blank for no limit. The limit on 4chan is 3 MB.";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -378,7 +378,7 @@
             this.label14.Location = new System.Drawing.Point(218, 99);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(454, 33);
-            this.label14.TabIndex = 13;
+            this.label14.TabIndex = 10;
             this.label14.Text = "Advanced users only. Keep blank if you don\'t know what this means.";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -405,7 +405,7 @@
             this.boxBitrate.Location = new System.Drawing.Point(3, 6);
             this.boxBitrate.Name = "boxBitrate";
             this.boxBitrate.Size = new System.Drawing.Size(93, 20);
-            this.boxBitrate.TabIndex = 5;
+            this.boxBitrate.TabIndex = 0;
             // 
             // label13
             // 
@@ -414,7 +414,7 @@
             this.label13.Location = new System.Drawing.Point(102, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(34, 33);
-            this.label13.TabIndex = 0;
+            this.label13.TabIndex = 1;
             this.label13.Text = "Kb/s";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -425,7 +425,7 @@
             this.label12.Location = new System.Drawing.Point(3, 99);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(70, 33);
-            this.label12.TabIndex = 11;
+            this.label12.TabIndex = 9;
             this.label12.Text = "Bitrate:";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -436,7 +436,7 @@
             this.label11.Location = new System.Drawing.Point(218, 33);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(454, 33);
-            this.label11.TabIndex = 10;
+            this.label11.TabIndex = 5;
             this.label11.Text = "Where to start the video. Leave blank to start at the beginning. Either use notat" +
     "ion HH:MM:SS or just the amount of seconds.";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -448,7 +448,7 @@
             this.label10.Location = new System.Drawing.Point(3, 33);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(70, 33);
-            this.label10.TabIndex = 9;
+            this.label10.TabIndex = 3;
             this.label10.Text = "Crop start:";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -459,7 +459,7 @@
             this.label5.Location = new System.Drawing.Point(218, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(454, 33);
-            this.label5.TabIndex = 4;
+            this.label5.TabIndex = 2;
             this.label5.Text = "Enter nothing to keep resolution intact. Enter -1 in one of the fields to scale a" +
     "ccording to aspect ratio.";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -471,7 +471,7 @@
             this.label2.Location = new System.Drawing.Point(3, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(70, 33);
-            this.label2.TabIndex = 3;
+            this.label2.TabIndex = 0;
             this.label2.Text = "Resolution:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -491,7 +491,7 @@
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(139, 33);
-            this.tableLayoutPanel6.TabIndex = 7;
+            this.tableLayoutPanel6.TabIndex = 1;
             // 
             // boxResH
             // 
@@ -555,7 +555,7 @@
             this.label3.Location = new System.Drawing.Point(217, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(455, 22);
-            this.label3.TabIndex = 2;
+            this.label3.TabIndex = 1;
             this.label3.Text = "Keep this unchecked until Moot allows WebM with audio.";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -566,7 +566,7 @@
             this.checkBoxAudio.Location = new System.Drawing.Point(64, 3);
             this.checkBoxAudio.Name = "checkBoxAudio";
             this.checkBoxAudio.Size = new System.Drawing.Size(147, 16);
-            this.checkBoxAudio.TabIndex = 1;
+            this.checkBoxAudio.TabIndex = 0;
             this.checkBoxAudio.Text = "Enable audio:";
             this.checkBoxAudio.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBoxAudio.UseVisualStyleBackColor = true;
@@ -575,7 +575,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(705, 354);
+            this.ClientSize = new System.Drawing.Size(705, 355);
             this.Controls.Add(this.tableLayoutPanel1);
             this.MinimumSize = new System.Drawing.Size(550, 393);
             this.Name = "MainForm";
