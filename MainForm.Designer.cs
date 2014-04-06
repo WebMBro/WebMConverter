@@ -42,6 +42,14 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
+            this.boxLimit = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.boxCropFrom = new System.Windows.Forms.TextBox();
+            this.boxCropTo = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
@@ -60,14 +68,6 @@
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
             this.checkBoxAudio = new System.Windows.Forms.CheckBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.boxCropTo = new System.Windows.Forms.TextBox();
-            this.boxCropFrom = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-            this.boxLimit = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -75,11 +75,11 @@
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
+            this.tableLayoutPanel7.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
-            this.tableLayoutPanel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -274,6 +274,91 @@
             this.tableLayoutPanel5.Size = new System.Drawing.Size(675, 165);
             this.tableLayoutPanel5.TabIndex = 1;
             // 
+            // tableLayoutPanel7
+            // 
+            this.tableLayoutPanel7.ColumnCount = 2;
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel7.Controls.Add(this.boxLimit, 0, 0);
+            this.tableLayoutPanel7.Controls.Add(this.label16, 1, 0);
+            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(76, 132);
+            this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
+            this.tableLayoutPanel7.RowCount = 1;
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(139, 33);
+            this.tableLayoutPanel7.TabIndex = 21;
+            // 
+            // boxLimit
+            // 
+            this.boxLimit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.boxLimit.Location = new System.Drawing.Point(3, 6);
+            this.boxLimit.Name = "boxLimit";
+            this.boxLimit.Size = new System.Drawing.Size(93, 20);
+            this.boxLimit.TabIndex = 5;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label16.Location = new System.Drawing.Point(102, 0);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(34, 33);
+            this.label16.TabIndex = 0;
+            this.label16.Text = "MB";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label15.Location = new System.Drawing.Point(3, 132);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(70, 33);
+            this.label15.TabIndex = 20;
+            this.label15.Text = "Size limit:";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label9.Location = new System.Drawing.Point(218, 66);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(454, 33);
+            this.label9.TabIndex = 19;
+            this.label9.Text = "How long the video should take. Leave blank for everything up to the end. Either " +
+    "use notation HH:MM:SS or just the amount of seconds.";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // boxCropFrom
+            // 
+            this.boxCropFrom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.boxCropFrom.Location = new System.Drawing.Point(79, 39);
+            this.boxCropFrom.Name = "boxCropFrom";
+            this.boxCropFrom.Size = new System.Drawing.Size(133, 20);
+            this.boxCropFrom.TabIndex = 18;
+            // 
+            // boxCropTo
+            // 
+            this.boxCropTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.boxCropTo.Location = new System.Drawing.Point(79, 72);
+            this.boxCropTo.Name = "boxCropTo";
+            this.boxCropTo.Size = new System.Drawing.Size(133, 20);
+            this.boxCropTo.TabIndex = 17;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label7.Location = new System.Drawing.Point(3, 66);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(70, 33);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "Crop length:";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -282,8 +367,8 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(454, 33);
             this.label6.TabIndex = 15;
-            this.label6.Text = "Will cut off the end of a video to ensure the file stays below this size. Leave b" +
-    "lank for no limit. The limit on 4chan is 3 MB.";
+            this.label6.Text = "Will adjust the quality to attempt to stay below this limit, and cut off the end " +
+    "of a video if needed. Leave blank for no limit. The limit on 4chan is 3 MB.";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label14
@@ -310,7 +395,7 @@
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 1;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
             this.tableLayoutPanel8.Size = new System.Drawing.Size(139, 33);
             this.tableLayoutPanel8.TabIndex = 12;
             // 
@@ -486,91 +571,6 @@
             this.checkBoxAudio.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBoxAudio.UseVisualStyleBackColor = true;
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label7.Location = new System.Drawing.Point(3, 66);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(70, 33);
-            this.label7.TabIndex = 16;
-            this.label7.Text = "Crop length:";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // boxCropTo
-            // 
-            this.boxCropTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.boxCropTo.Location = new System.Drawing.Point(79, 72);
-            this.boxCropTo.Name = "boxCropTo";
-            this.boxCropTo.Size = new System.Drawing.Size(133, 20);
-            this.boxCropTo.TabIndex = 17;
-            // 
-            // boxCropFrom
-            // 
-            this.boxCropFrom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.boxCropFrom.Location = new System.Drawing.Point(79, 39);
-            this.boxCropFrom.Name = "boxCropFrom";
-            this.boxCropFrom.Size = new System.Drawing.Size(133, 20);
-            this.boxCropFrom.TabIndex = 18;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label9.Location = new System.Drawing.Point(218, 66);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(454, 33);
-            this.label9.TabIndex = 19;
-            this.label9.Text = "How long the video should take. Leave blank for everything up to the end. Either " +
-    "use notation HH:MM:SS or just the amount of seconds.";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label15.Location = new System.Drawing.Point(3, 132);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(70, 33);
-            this.label15.TabIndex = 20;
-            this.label15.Text = "Size limit:";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tableLayoutPanel7
-            // 
-            this.tableLayoutPanel7.ColumnCount = 2;
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel7.Controls.Add(this.boxLimit, 0, 0);
-            this.tableLayoutPanel7.Controls.Add(this.label16, 1, 0);
-            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(76, 132);
-            this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
-            this.tableLayoutPanel7.RowCount = 1;
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(139, 33);
-            this.tableLayoutPanel7.TabIndex = 21;
-            // 
-            // boxLimit
-            // 
-            this.boxLimit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.boxLimit.Location = new System.Drawing.Point(3, 6);
-            this.boxLimit.Name = "boxLimit";
-            this.boxLimit.Size = new System.Drawing.Size(93, 20);
-            this.boxLimit.TabIndex = 5;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label16.Location = new System.Drawing.Point(102, 0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(34, 33);
-            this.label16.TabIndex = 0;
-            this.label16.Text = "MB";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -590,6 +590,8 @@
             this.groupBox4.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
+            this.tableLayoutPanel7.ResumeLayout(false);
+            this.tableLayoutPanel7.PerformLayout();
             this.tableLayoutPanel8.ResumeLayout(false);
             this.tableLayoutPanel8.PerformLayout();
             this.tableLayoutPanel6.ResumeLayout(false);
@@ -597,8 +599,6 @@
             this.groupBox3.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
-            this.tableLayoutPanel7.ResumeLayout(false);
-            this.tableLayoutPanel7.PerformLayout();
             this.ResumeLayout(false);
 
         }
