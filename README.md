@@ -15,4 +15,4 @@ Important to know:
 
 Screenshot:
 
-![Screenshot](http://a.pomf.se/kiyqsg.PNG)
+![Screenshot](http://a.pomf.se/ihcwsh.PNG)
