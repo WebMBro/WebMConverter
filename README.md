@@ -8,3 +8,7 @@ Important to know:
 * Requires .NET Framework 4.5
 * Already includes a copy of ffmpeg.exe
 * Only works on Windows (I assume Linux users don't need GUIs)
+
+Screenshot:
+
+![Screenshot](http://a.pomf.se/kiyqsg.PNG)
