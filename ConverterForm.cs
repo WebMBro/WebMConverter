@@ -105,7 +105,7 @@ namespace WebMConverter
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            if (!_ended)
+            if (!_ended || !_panic) //Prevent stack overflow
             {
                 if (!_process.HasExited)
                     _process.Kill();
