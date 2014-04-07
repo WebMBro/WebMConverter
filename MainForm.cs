@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,6 +61,8 @@ namespace WebMConverter
 
         }
 
+        char[] invalidChars = Path.GetInvalidFileNameChars().Concat(Path.GetInvalidPathChars()).ToArray();
+
         private string Go()
         {
             string input = textBoxIn.Text;
@@ -69,6 +72,14 @@ namespace WebMConverter
                 return "No input file!";
             if (string.IsNullOrWhiteSpace(output))
                 return "No output file!";
+
+            if (invalidChars.Any(input.Contains))
+                return "Input path contains invalid characters!\nInvalid characters: " + string.Join(" ", invalidChars);
+            if (invalidChars.Any(output.Contains))
+                return "Output path contains invalid characters!\nInvalid characters: " + string.Join(" ", invalidChars);
+
+            if (!File.Exists(input))
+                return "Input file doesn't exist!";
 
 
             int width = 0;
