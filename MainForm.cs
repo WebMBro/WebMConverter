@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WebMConverter
@@ -58,7 +51,7 @@ namespace WebMConverter
 
         private void buttonGo_Click(object sender, EventArgs e)
         {
-            string result = Go();
+            string result = Convert();
             if (!string.IsNullOrWhiteSpace(result))
                 MessageBox.Show(result, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
@@ -66,7 +59,7 @@ namespace WebMConverter
 
         char[] invalidChars = Path.GetInvalidPathChars();
 
-        private string Go()
+        private string Convert()
         {
             string input = textBoxIn.Text;
             string output = textBoxOut.Text;
@@ -131,7 +124,7 @@ namespace WebMConverter
 
             if (!string.IsNullOrWhiteSpace(boxCropTo.Text))
             {
-                float endSeconds = 0;
+                float endSeconds;
                 if (boxCropTo.Text.Contains(":"))
                 {
                     TimeSpan timeEnd;
@@ -202,10 +195,6 @@ namespace WebMConverter
                 for (int i = 0; i < passes; i++)
                     arguments[i] = string.Format(_template, input, start, end, audio, bitrate, size, threads, limitTo, "-pass " + (i + 1), output);
             }
-            
-            //Debug shit
-            //MessageBox.Show(arguments);
-            //return null;
 
             var form = new ConverterForm(arguments);
             form.ShowDialog();
