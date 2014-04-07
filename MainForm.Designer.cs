@@ -69,6 +69,11 @@ namespace WebMConverter
             this.boxCropTo = new System.Windows.Forms.TextBox();
             this.boxCropFrom = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
+            this.trackThreads = new System.Windows.Forms.TrackBar();
+            this.labelThreads = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -82,6 +87,8 @@ namespace WebMConverter
             this.groupBox3.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
+            this.tableLayoutPanel10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -248,6 +255,8 @@ namespace WebMConverter
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 76F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 158F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.Controls.Add(this.label9, 2, 4);
+            this.tableLayoutPanel5.Controls.Add(this.label7, 0, 4);
             this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel9, 1, 1);
             this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel7, 1, 3);
             this.tableLayoutPanel5.Controls.Add(this.label15, 0, 3);
@@ -260,6 +269,7 @@ namespace WebMConverter
             this.tableLayoutPanel5.Controls.Add(this.label5, 2, 0);
             this.tableLayoutPanel5.Controls.Add(this.label2, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel6, 1, 0);
+            this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel10, 1, 4);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
@@ -579,6 +589,70 @@ namespace WebMConverter
             this.label17.Text = "to";
             this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label7.Location = new System.Drawing.Point(3, 132);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(70, 34);
+            this.label7.TabIndex = 24;
+            this.label7.Text = "Threads:";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tableLayoutPanel10
+            // 
+            this.tableLayoutPanel10.ColumnCount = 2;
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86.18421F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.81579F));
+            this.tableLayoutPanel10.Controls.Add(this.trackThreads, 0, 0);
+            this.tableLayoutPanel10.Controls.Add(this.labelThreads, 1, 0);
+            this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel10.Location = new System.Drawing.Point(79, 135);
+            this.tableLayoutPanel10.Name = "tableLayoutPanel10";
+            this.tableLayoutPanel10.RowCount = 1;
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(152, 28);
+            this.tableLayoutPanel10.TabIndex = 25;
+            // 
+            // trackThreads
+            // 
+            this.trackThreads.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trackThreads.Location = new System.Drawing.Point(0, 0);
+            this.trackThreads.Margin = new System.Windows.Forms.Padding(0);
+            this.trackThreads.Maximum = 16;
+            this.trackThreads.Minimum = 1;
+            this.trackThreads.Name = "trackThreads";
+            this.trackThreads.Size = new System.Drawing.Size(131, 28);
+            this.trackThreads.TabIndex = 24;
+            this.trackThreads.Value = 1;
+            this.trackThreads.Scroll += new System.EventHandler(this.trackThreads_Scroll);
+            // 
+            // labelThreads
+            // 
+            this.labelThreads.AutoSize = true;
+            this.labelThreads.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelThreads.Location = new System.Drawing.Point(131, 0);
+            this.labelThreads.Margin = new System.Windows.Forms.Padding(0);
+            this.labelThreads.Name = "labelThreads";
+            this.labelThreads.Size = new System.Drawing.Size(21, 28);
+            this.labelThreads.TabIndex = 25;
+            this.labelThreads.Text = "1";
+            this.labelThreads.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label9.Location = new System.Drawing.Point(237, 132);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(689, 34);
+            this.label9.TabIndex = 26;
+            this.label9.Text = "Advanced users only. Keep at 1 if you don\'t know what this means. Determines amou" +
+    "nt of threads ffmpeg uses. Try setting this to 1 if ffmpeg.exe crashes as soon a" +
+    "s you click Convert.";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -609,6 +683,9 @@ namespace WebMConverter
             this.tableLayoutPanel4.PerformLayout();
             this.tableLayoutPanel9.ResumeLayout(false);
             this.tableLayoutPanel9.PerformLayout();
+            this.tableLayoutPanel10.ResumeLayout(false);
+            this.tableLayoutPanel10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -655,6 +732,11 @@ namespace WebMConverter
         private System.Windows.Forms.TextBox boxCropTo;
         private System.Windows.Forms.TextBox boxCropFrom;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
+        private System.Windows.Forms.TrackBar trackThreads;
+        private System.Windows.Forms.Label labelThreads;
+        private System.Windows.Forms.Label label9;
     }
 }
 
