@@ -20,15 +20,16 @@ namespace WebMConverter
         {
             InitializeComponent();
 
-            _template = "{1} -i \"{0}\" {2} -c:v libvpx {3} -crf 32 -b:v {4}K {5} -threads 0 {6} \"{7}\"";
+            _template = "{1} -i \"{0}\" {2} -c:v libvpx {3} -crf 32 -b:v {4}K {5} -threads {6} {7} \"{8}\"";
             //{0} is input file
             //{1} is -ss TIME if seek enabled otherwise blank
             //{2} is -to TIME if to enabled otherwise blank
             //{3} is -an if no audio otherwise blank
             //{4} is bitrate in kb/s
             //{5} is -vf scale=WIDTH:HEIGHT if set otherwise blank
-            //{6} is -fs 3M if 3MB limit enabled otherwise blank
-            //{7} is output file
+            //{6} is amount of threads to use
+            //{7} is -fs 3M if 3MB limit enabled otherwise blank
+            //{8} is output file
 
         }
 
@@ -186,7 +187,9 @@ namespace WebMConverter
             if (!checkBoxAudio.Checked) //Remember, if the box ISN'T checked, the tag gets added
                 audio = "-an";
 
-            string arguments = string.Format(_template, input, start, end, audio, bitrate, size, limitTo, output);
+            int threads = trackThreads.Value;
+
+            string arguments = string.Format(_template, input, start, end, audio, bitrate, size, threads, limitTo, output);
 
             //Debug shit
             //MessageBox.Show(arguments);
@@ -196,6 +199,11 @@ namespace WebMConverter
             form.ShowDialog();
 
             return null;
+        }
+
+        private void trackThreads_Scroll(object sender, EventArgs e)
+        {
+            labelThreads.Text = trackThreads.Value.ToString();
         }
     }
 }
