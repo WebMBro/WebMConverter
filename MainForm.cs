@@ -61,7 +61,8 @@ namespace WebMConverter
 
         }
 
-        char[] invalidChars = Path.GetInvalidFileNameChars().Concat(Path.GetInvalidPathChars()).ToArray();
+        //char[] invalidChars = Path.GetInvalidFileNameChars().Concat(Path.GetInvalidPathChars()).ToArray(); //NOPE
+        char[] invalidChars = Path.GetInvalidPathChars();
 
         private string Go()
         {
