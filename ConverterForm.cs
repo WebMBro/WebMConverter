@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Timer = System.Windows.Forms.Timer;
 
@@ -54,7 +46,7 @@ namespace WebMConverter
 
             if (multipass)
                 for (int i = 0; i < _arguments.Length; i++)
-                    textBoxOutput.AppendText(string.Format("\nArguments for pass {0}: {1}", i+1, _arguments[i]));
+                    textBoxOutput.AppendText(string.Format("\nArguments for pass {0}: {1}", i + 1, _arguments[i]));
             else
                 textBoxOutput.AppendText("\nArguments: " + argument);
 
@@ -86,7 +78,7 @@ namespace WebMConverter
 
             _process.Exited += (o, args) => textBoxOutput.Invoke((Action)(() =>
                                                                               {
-                                                                                  if (_panic) return; //This should stop that one excetion when closing the converter
+                                                                                  if (_panic) return; //This should stop that one exception when closing the converter
                                                                                   textBoxOutput.AppendText("\n--- FFMPEG HAS EXITED ---");
                                                                                   buttonCancel.Enabled = false;
 
@@ -100,7 +92,7 @@ namespace WebMConverter
             _process.BeginErrorReadLine();
             _process.BeginOutputReadLine();
 
-            _process.StandardInput.Write("y\n"); //should confirm overwrite?
+            _process.StandardInput.Write("y\n"); //Confirm overwrite
         }
 
         int currentPass = 0;
@@ -121,7 +113,7 @@ namespace WebMConverter
             info.CreateNoWindow = true; //Hide console
             info.Arguments = arguments[currentPass];
 
-            _process.StartInfo = info; //CRASH HERE?
+            _process.StartInfo = info; 
             _process.EnableRaisingEvents = true; //!!!!
 
             _process.ErrorDataReceived += ProcessOnErrorDataReceived;
@@ -129,7 +121,7 @@ namespace WebMConverter
 
             _process.Exited += (o, args) => textBoxOutput.Invoke((Action)(() =>
             {
-                if (_panic) return; //This should stop that one excetion when closing the converter
+                if (_panic) return; //This should stop that one exception when closing the converter
                 textBoxOutput.AppendText("\n--- FFMPEG HAS EXITED ---");
 
                 currentPass++;
@@ -152,7 +144,7 @@ namespace WebMConverter
             _process.BeginErrorReadLine();
             _process.BeginOutputReadLine();
 
-            _process.StandardInput.Write("y\n"); //should confirm overwrite?
+            _process.StandardInput.Write("y\n"); //Confirm overwrite
         }
 
         private void Exited(object sender, EventArgs eventArgs)
@@ -171,8 +163,8 @@ namespace WebMConverter
             }
 
             buttonCancel.Text = "Close";
-           buttonCancel.Enabled = true;
-           _ended = true;
+            buttonCancel.Enabled = true;
+            _ended = true;
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -188,8 +180,7 @@ namespace WebMConverter
 
         private void ConverterForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //TODO: an exception gets thrown when the user closes the converter form while it's converting!
-            _panic = true;
+            _panic = true; //Shut down while avoiding exceptions
             buttonCancel_Click(sender, e);
         }
     }
