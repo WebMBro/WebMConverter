@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -61,7 +62,6 @@ namespace WebMConverter
 
         }
 
-        //char[] invalidChars = Path.GetInvalidFileNameChars().Concat(Path.GetInvalidPathChars()).ToArray(); //NOPE
         char[] invalidChars = Path.GetInvalidPathChars();
 
         private string Go()
@@ -82,7 +82,6 @@ namespace WebMConverter
             if (!File.Exists(input))
                 return "Input file doesn't exist!";
 
-
             int width = 0;
             int height = 0;
 
@@ -98,50 +97,59 @@ namespace WebMConverter
                 (string.IsNullOrWhiteSpace(boxResW.Text) && !string.IsNullOrWhiteSpace(boxResH.Text)))
                 return "One of the width/height fields isn't filled in! Either fill none of them, or both of them!";
 
-
             //Try fo figure out if begin/end are correct
             //1. if it contains a :, it's probably a time, try to convert using DateTime.Parse
             //2. if not, try int.tryparse
 
+            float startSeconds = 0;
             string start = "";
             string end = "";
 
             if (!string.IsNullOrWhiteSpace(boxCropFrom.Text))
             {
-                start = "-ss " + boxCropFrom.Text.Trim();
                 if (boxCropFrom.Text.Contains(":"))
                 {
-                    TimeSpan time;
-                    if (!TimeSpan.TryParse(boxCropFrom.Text, out time))
+                    TimeSpan timeStart;
+                    if (!TimeSpan.TryParse(boxCropFrom.Text, CultureInfo.InvariantCulture, out timeStart))
                         return "Invalid start crop time!";
+                    startSeconds = (float)timeStart.TotalSeconds;
                 }
                 else
                 {
-                    uint integer;
-                    if (!uint.TryParse(boxCropFrom.Text, out integer))
+                    float timeStart;
+                    if (!float.TryParse(boxCropFrom.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out timeStart))
                         return "Invalid start crop time!";
+                    startSeconds = timeStart;
                 }
+
+                start = "-ss " + startSeconds.ToString(CultureInfo.InvariantCulture); //Convert comma to dot
             }
 
             float duration = 0;
 
             if (!string.IsNullOrWhiteSpace(boxCropTo.Text))
             {
-                end = "-to " + boxCropTo.Text.Trim();
+                float endSeconds = 0;
                 if (boxCropTo.Text.Contains(":"))
                 {
-                    TimeSpan time;
-                    if (!TimeSpan.TryParse(boxCropTo.Text, out time))
+                    TimeSpan timeEnd;
+                    if (!TimeSpan.TryParse(boxCropTo.Text, CultureInfo.InvariantCulture, out timeEnd))
                         return "Invalid end crop time!";
-                    duration = (float)time.TotalSeconds;
+                    endSeconds = (float)timeEnd.TotalSeconds;
                 }
                 else
                 {
-                    uint integer;
-                    if (!uint.TryParse(boxCropTo.Text, out integer))
+                    float timeEnd;
+                    if (!float.TryParse(boxCropTo.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out timeEnd))
                         return "Invalid end crop time!";
-                    duration = integer;
+                    endSeconds = timeEnd;
                 }
+
+                duration = endSeconds - startSeconds;
+                if (duration <= 0)
+                    return "Video is 0 or less seconds long!";
+
+                end = "-to " + duration.ToString(CultureInfo.InvariantCulture); //Convert comma to dot
             }
 
             /*if (string.IsNullOrWhiteSpace(start) && !string.IsNullOrWhiteSpace(end) ||
@@ -154,7 +162,7 @@ namespace WebMConverter
             {
                 if (!float.TryParse(boxLimit.Text, out limit))
                     return "Invalid size limit!";
-                limitTo = string.Format("-fs {0}M", limit.ToString(System.Globalization.CultureInfo.InvariantCulture)); //Should turn comma into dot
+                limitTo = string.Format("-fs {0}M", limit.ToString(CultureInfo.InvariantCulture)); //Should turn comma into dot
             }
 
             string size = "";
@@ -179,6 +187,11 @@ namespace WebMConverter
                 audio = "-an";
 
             string arguments = string.Format(_template, input, start, end, audio, bitrate, size, limitTo, output);
+
+            //Debug shit
+            //MessageBox.Show(arguments);
+            //return null;
+
             var form = new ConverterForm(arguments);
             form.ShowDialog();
 
