@@ -155,7 +155,7 @@ namespace WebMConverter
             //So if you have 60 seconds, the bitrate should be...
             //24576/60 = 409.6 kilobits/sec
 
-            int bitrate = 300;
+            int bitrate = 900;
             if (duration != 0 && limit != 0) bitrate = (int)(8192 * limit / duration);
 
             if (!string.IsNullOrWhiteSpace(boxBitrate.Text))
