@@ -9,6 +9,7 @@ namespace WebMConverter
     public partial class MainForm : Form
     {
         private string _template;
+
         public MainForm()
         {
             InitializeComponent();
@@ -27,26 +28,37 @@ namespace WebMConverter
 
         }
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            int threads = Environment.ProcessorCount;  //Set thread slider to default of 4
+            trackThreads.Value = Math.Min(trackThreads.Maximum, Math.Max(trackThreads.Minimum, threads));
+            trackThreads_Scroll(sender, e); //Update label
+        }
+
         private void buttonBrowseIn_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.CheckFileExists = true;
-            dialog.CheckPathExists = true;
-            dialog.ValidateNames = true;
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.CheckFileExists = true;
+                dialog.CheckPathExists = true;
+                dialog.ValidateNames = true;
 
-            if (dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.FileName))
-                textBoxIn.Text = dialog.FileName;
+                if (dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.FileName))
+                    textBoxIn.Text = dialog.FileName;
+            }
         }
 
         private void buttonBrowseOut_Click(object sender, EventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.OverwritePrompt = true;
-            dialog.ValidateNames = true;
-            dialog.Filter = "WebM files|*.webm";
+            using (SaveFileDialog dialog = new SaveFileDialog())
+            {
+                dialog.OverwritePrompt = true;
+                dialog.ValidateNames = true;
+                dialog.Filter = "WebM files|*.webm";
 
-            if (dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.FileName))
-                textBoxOut.Text = dialog.FileName;
+                if (dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.FileName))
+                    textBoxOut.Text = dialog.FileName;
+            }
         }
 
         private void buttonGo_Click(object sender, EventArgs e)

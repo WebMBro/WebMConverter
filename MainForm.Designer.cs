@@ -652,9 +652,9 @@ namespace WebMConverter
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(689, 32);
             this.label9.TabIndex = 26;
-            this.label9.Text = "Advanced users only. Keep at 1 if you don\'t know what this means. Determines amou" +
-    "nt of threads ffmpeg uses. Try setting this to 1 if ffmpeg.exe crashes as soon a" +
-    "s you click Convert.";
+            this.label9.Text = "Advanced users only. Keep at default if you don\'t know what this means. Determine" +
+    "s amount of threads ffmpeg uses. Try setting this to 1 if ffmpeg.exe crashes as " +
+    "soon as you click Convert.";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // checkBox2Pass
@@ -690,6 +690,7 @@ namespace WebMConverter
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "WebM for Retards";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
