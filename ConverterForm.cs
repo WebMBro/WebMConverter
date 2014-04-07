@@ -16,27 +16,58 @@ namespace WebMConverter
 {
     public partial class ConverterForm : Form
     {
-        private string _arguments;
+        private string[] _arguments;
         private Process _process;
         private Timer _timer;
         private bool _ended;
         private bool _panic;
 
-        public ConverterForm(string arg)
+        public ConverterForm(string[] args)
         {
             InitializeComponent();
 
-            _arguments = arg;
+            _arguments = args;
 
+        }
+
+        private void ProcessOnErrorDataReceived(object sender, DataReceivedEventArgs args)
+        {
+            if (args.Data != null)
+                textBoxOutput.Invoke((Action)(() => textBoxOutput.AppendText("\n" + args.Data)));
+        }
+
+        private void ProcessOnOutputDataReceived(object sender, DataReceivedEventArgs args)
+        {
+            if (args.Data != null)
+                textBoxOutput.Invoke((Action)(() => textBoxOutput.AppendText("\n" + args.Data)));
         }
 
         private void ConverterForm_Load(object sender, EventArgs e)
         {
-            textBoxOutput.AppendText("Starting...");
-            textBoxOutput.AppendText("\nArguments: " + _arguments);
+            string argument = null;
+            bool multipass = true;
+            if (_arguments.Length == 1)
+            {
+                multipass = false;
+                argument = _arguments[0];
+            }
+
+            if (multipass)
+                for (int i = 0; i < _arguments.Length; i++)
+                    textBoxOutput.AppendText(string.Format("\nArguments for pass {0}: {1}", i+1, _arguments[i]));
+            else
+                textBoxOutput.AppendText("\nArguments: " + argument);
 
             string ffmpeg = Path.Combine(Environment.CurrentDirectory, "ffmpeg/ffmpeg.exe");
 
+            if (multipass)
+                MultiPass(_arguments, ffmpeg);
+            else
+                SinglePass(argument, ffmpeg);
+        }
+
+        private void SinglePass(string argument, string ffmpeg)
+        {
             _process = new Process();
 
             ProcessStartInfo info = new ProcessStartInfo(ffmpeg);
@@ -45,22 +76,13 @@ namespace WebMConverter
             info.RedirectStandardError = true;
             info.UseShellExecute = false; //Required to redirect IO streams
             info.CreateNoWindow = true; //Hide console
-            info.Arguments = _arguments;
+            info.Arguments = argument;
 
             _process.StartInfo = info;
             _process.EnableRaisingEvents = true; //!!!!
 
-            _process.ErrorDataReceived += (o, args) =>
-                                             {
-                                                 if (args.Data != null)
-                                                     textBoxOutput.Invoke((Action)(() => textBoxOutput.AppendText("\n" + args.Data)));
-                                             };
-
-            _process.OutputDataReceived += (o, args) =>
-                                              {
-                                                  if (args.Data != null)
-                                                      textBoxOutput.Invoke((Action)(() => textBoxOutput.AppendText("\n" + args.Data)));
-                                              };
+            _process.ErrorDataReceived += ProcessOnErrorDataReceived;
+            _process.OutputDataReceived += ProcessOnOutputDataReceived;
 
             _process.Exited += (o, args) => textBoxOutput.Invoke((Action)(() =>
                                                                               {
@@ -78,7 +100,57 @@ namespace WebMConverter
             _process.BeginErrorReadLine();
             _process.BeginOutputReadLine();
 
-            textBoxOutput.AppendText("\nffmpeg.exe is now converting your video.");
+            _process.StandardInput.Write("y\n"); //should confirm overwrite?
+        }
+
+        int currentPass = 0;
+
+        private void MultiPass(string[] arguments, string ffmpeg)
+        {
+            int passes = arguments.Length;
+
+            //What a shame, so much copy paste going on here.
+
+            _process = new Process();
+
+            ProcessStartInfo info = new ProcessStartInfo(ffmpeg);
+            info.RedirectStandardInput = true;
+            info.RedirectStandardOutput = true;
+            info.RedirectStandardError = true;
+            info.UseShellExecute = false; //Required to redirect IO streams
+            info.CreateNoWindow = true; //Hide console
+            info.Arguments = arguments[currentPass];
+
+            _process.StartInfo = info; //CRASH HERE?
+            _process.EnableRaisingEvents = true; //!!!!
+
+            _process.ErrorDataReceived += ProcessOnErrorDataReceived;
+            _process.OutputDataReceived += ProcessOnOutputDataReceived;
+
+            _process.Exited += (o, args) => textBoxOutput.Invoke((Action)(() =>
+            {
+                if (_panic) return; //This should stop that one excetion when closing the converter
+                textBoxOutput.AppendText("\n--- FFMPEG HAS EXITED ---");
+
+                currentPass++;
+                if (currentPass < passes)
+                {
+                    textBoxOutput.AppendText(string.Format("\n--- ENTERING PASS {0} ---", currentPass));
+                    MultiPass(arguments, ffmpeg); //Sort of recursion going on here, be careful with stack overflows and shit
+                    return;
+                }
+
+                buttonCancel.Enabled = false;
+
+                _timer = new Timer();
+                _timer.Interval = 500;
+                _timer.Tick += Exited;
+                _timer.Start();
+            }));
+
+            _process.Start();
+            _process.BeginErrorReadLine();
+            _process.BeginOutputReadLine();
 
             _process.StandardInput.Write("y\n"); //should confirm overwrite?
         }

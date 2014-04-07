@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label18.Text" xml:space="preserve">
+    <value>Advanced users only. Keep unchecked if you don't know what this means. Will make ffmpeg use two passes, which can increase the quality/size ratio, but also increases the time it takes to encode. Disable if you run into any issues.</value>
+  </data>
   <data name="label11.Text" xml:space="preserve">
     <value>Crop off the start/end of the video. Leave both blank to use entire video. Leave start blank to start at the beginning, leave end blank to convert everything up to the end. Use notation HH:MM:SS, HH:MM:SS.MS or just the amount of seconds. If entering decimals use dots, not commas.</value>
   </data>
