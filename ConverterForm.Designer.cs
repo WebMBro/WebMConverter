@@ -102,6 +102,7 @@
             this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "Conversion Progress";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConverterForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ConverterForm_FormClosed);
             this.Load += new System.EventHandler(this.ConverterForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();

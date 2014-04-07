@@ -14,6 +14,9 @@ namespace WebMConverter
         private bool _ended;
         private bool _panic;
 
+        private bool _multipass;
+        private bool _cancelMultipass;
+
         public ConverterForm(string[] args)
         {
             InitializeComponent();
@@ -37,14 +40,14 @@ namespace WebMConverter
         private void ConverterForm_Load(object sender, EventArgs e)
         {
             string argument = null;
-            bool multipass = true;
+           _multipass = true;
             if (_arguments.Length == 1)
             {
-                multipass = false;
+                _multipass = false;
                 argument = _arguments[0];
             }
 
-            if (multipass)
+            if (_multipass)
                 for (int i = 0; i < _arguments.Length; i++)
                     textBoxOutput.AppendText(string.Format("\nArguments for pass {0}: {1}", i + 1, _arguments[i]));
             else
@@ -52,7 +55,7 @@ namespace WebMConverter
 
             string ffmpeg = Path.Combine(Environment.CurrentDirectory, "ffmpeg/ffmpeg.exe");
 
-            if (multipass)
+            if (_multipass)
                 MultiPass(_arguments, ffmpeg);
             else
                 SinglePass(argument, ffmpeg);
@@ -102,7 +105,6 @@ namespace WebMConverter
             int passes = arguments.Length;
 
             //What a shame, so much copy paste going on here.
-
             _process = new Process();
 
             ProcessStartInfo info = new ProcessStartInfo(ffmpeg);
@@ -125,9 +127,10 @@ namespace WebMConverter
                 textBoxOutput.AppendText("\n--- FFMPEG HAS EXITED ---");
 
                 currentPass++;
-                if (currentPass < passes)
+                if (currentPass < passes && !_cancelMultipass)
                 {
                     textBoxOutput.AppendText(string.Format("\n--- ENTERING PASS {0} ---", currentPass));
+
                     MultiPass(arguments, ffmpeg); //Sort of recursion going on here, be careful with stack overflows and shit
                     return;
                 }
@@ -169,6 +172,8 @@ namespace WebMConverter
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
+            _cancelMultipass = true;
+
             if (!_ended || _panic) //Prevent stack overflow
             {
                 if (!_process.HasExited)
@@ -182,6 +187,11 @@ namespace WebMConverter
         {
             _panic = true; //Shut down while avoiding exceptions
             buttonCancel_Click(sender, e);
+        }
+
+        private void ConverterForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _process.Dispose();
         }
     }
 }
