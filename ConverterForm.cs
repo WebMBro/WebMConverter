@@ -129,7 +129,7 @@ namespace WebMConverter
                 currentPass++;
                 if (currentPass < passes && !_cancelMultipass)
                 {
-                    textBoxOutput.AppendText(string.Format("\n--- ENTERING PASS {0} ---", currentPass));
+                    textBoxOutput.AppendText(string.Format("\n--- ENTERING PASS {0} ---", currentPass + 1));
 
                     MultiPass(arguments, ffmpeg); //Sort of recursion going on here, be careful with stack overflows and shit
                     return;
