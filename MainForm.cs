@@ -9,10 +9,16 @@ namespace WebMConverter
     public partial class MainForm : Form
     {
         private string _template;
+        private string autoOutput;
+        private string autoTitle;
 
         public MainForm()
         {
             InitializeComponent();
+
+            this.AllowDrop = true;
+            this.DragEnter += new DragEventHandler(HandleDragEnter);
+            this.DragDrop += new DragEventHandler(HandleDragDrop);
 
             _template = "{1} -i \"{0}\" {2} -c:v libvpx {3} -crf 32 -b:v {4}K {5} -threads {6} {7} {8} {9} -f webm \"{10}\"";
             //{0} is input file
@@ -45,8 +51,37 @@ namespace WebMConverter
                 dialog.ValidateNames = true;
 
                 if (dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.FileName))
-                    textBoxIn.Text = dialog.FileName;
+                    SetFile(dialog.FileName);
             }
+        }
+
+        private void SetFile(string path)
+        {
+            textBoxIn.Text = path;
+            string name = Path.GetFileNameWithoutExtension(path);
+            if (boxMetadataTitle.Text == autoTitle || boxMetadataTitle.Text == "")
+                boxMetadataTitle.Text = autoTitle = name;
+            if (textBoxOut.Text == autoOutput || textBoxOut.Text == "")
+                textBoxOut.Text = autoOutput = name + ".webm";
+        }
+
+        private void HandleDragEnter(object sender, DragEventArgs e)
+        {
+            // show copy cursor for files
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void HandleDragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string file in files) SetFile(file);
         }
 
         private void buttonBrowseOut_Click(object sender, EventArgs e)
@@ -197,10 +232,9 @@ namespace WebMConverter
             int threads = trackThreads.Value;
             bool multipass = checkBox2Pass.Checked;
 
-            string title = Path.GetFileName(input); //Use name of input video if no title specified
+            string metadataTitle = "";
             if (!string.IsNullOrWhiteSpace(boxMetadataTitle.Text))
-                title = string.Format("-metadata title=\"{0}\"", boxMetadataTitle.Text.Replace("\"", "\\\""));
-            string metadataTitle = string.Format("-metadata title=\"{0}\"", title);
+                metadataTitle = string.Format("-metadata title=\"{0}\"", boxMetadataTitle.Text.Replace("\"", "\\\""));
 
             string[] arguments;
             if (!multipass)
