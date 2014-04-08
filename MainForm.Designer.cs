@@ -155,7 +155,7 @@ namespace WebMConverter
             this.buttonBrowseOut.Location = new System.Drawing.Point(799, 33);
             this.buttonBrowseOut.Name = "buttonBrowseOut";
             this.buttonBrowseOut.Size = new System.Drawing.Size(62, 25);
-            this.buttonBrowseOut.TabIndex = 3;
+            this.buttonBrowseOut.TabIndex = 5;
             this.buttonBrowseOut.Text = "Browse";
             this.buttonBrowseOut.UseVisualStyleBackColor = true;
             this.buttonBrowseOut.Click += new System.EventHandler(this.buttonBrowseOut_Click);
@@ -166,7 +166,7 @@ namespace WebMConverter
             this.textBoxOut.Location = new System.Drawing.Point(72, 35);
             this.textBoxOut.Name = "textBoxOut";
             this.textBoxOut.Size = new System.Drawing.Size(721, 20);
-            this.textBoxOut.TabIndex = 2;
+            this.textBoxOut.TabIndex = 4;
             // 
             // label4
             // 
@@ -196,7 +196,7 @@ namespace WebMConverter
             this.textBoxIn.Location = new System.Drawing.Point(72, 5);
             this.textBoxIn.Name = "textBoxIn";
             this.textBoxIn.Size = new System.Drawing.Size(721, 20);
-            this.textBoxIn.TabIndex = 0;
+            this.textBoxIn.TabIndex = 1;
             // 
             // buttonGo
             // 
@@ -216,7 +216,7 @@ namespace WebMConverter
             this.buttonBrowseIn.Location = new System.Drawing.Point(799, 3);
             this.buttonBrowseIn.Name = "buttonBrowseIn";
             this.buttonBrowseIn.Size = new System.Drawing.Size(62, 24);
-            this.buttonBrowseIn.TabIndex = 1;
+            this.buttonBrowseIn.TabIndex = 2;
             this.buttonBrowseIn.Text = "Browse";
             this.buttonBrowseIn.UseVisualStyleBackColor = true;
             this.buttonBrowseIn.Click += new System.EventHandler(this.buttonBrowseIn_Click);
@@ -303,7 +303,7 @@ namespace WebMConverter
             this.label18.Location = new System.Drawing.Point(237, 170);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(689, 35);
-            this.label18.TabIndex = 28;
+            this.label18.TabIndex = 11;
             this.label18.Text = resources.GetString("label18.Text");
             this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -315,7 +315,7 @@ namespace WebMConverter
             this.checkBox2Pass.Location = new System.Drawing.Point(66, 173);
             this.checkBox2Pass.Name = "checkBox2Pass";
             this.checkBox2Pass.Size = new System.Drawing.Size(165, 29);
-            this.checkBox2Pass.TabIndex = 0;
+            this.checkBox2Pass.TabIndex = 10;
             this.checkBox2Pass.Text = "Enable 2-pass encoding:";
             this.checkBox2Pass.UseVisualStyleBackColor = true;
             // 
@@ -326,7 +326,7 @@ namespace WebMConverter
             this.label9.Location = new System.Drawing.Point(237, 136);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(689, 34);
-            this.label9.TabIndex = 26;
+            this.label9.TabIndex = 9;
             this.label9.Text = "Advanced users only. Keep at default if you don\'t know what this means. Determine" +
     "s amount of threads ffmpeg uses. Try setting this to 1 if ffmpeg.exe crashes as " +
     "soon as you click Convert.";
@@ -339,7 +339,7 @@ namespace WebMConverter
             this.label7.Location = new System.Drawing.Point(3, 136);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(70, 34);
-            this.label7.TabIndex = 24;
+            this.label7.TabIndex = 8;
             this.label7.Text = "Threads:";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -431,7 +431,7 @@ namespace WebMConverter
             this.label15.Location = new System.Drawing.Point(3, 102);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(70, 34);
-            this.label15.TabIndex = 11;
+            this.label15.TabIndex = 6;
             this.label15.Text = "Size limit:";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -442,7 +442,7 @@ namespace WebMConverter
             this.label6.Location = new System.Drawing.Point(237, 102);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(689, 34);
-            this.label6.TabIndex = 12;
+            this.label6.TabIndex = 7;
             this.label6.Text = "Will adjust the quality to attempt to stay below this limit, and cut off the end " +
     "of a video if needed. Leave blank for no limit. The limit on 4chan is 3 MB. If e" +
     "ntering decimals use dots, not commas.";
@@ -455,7 +455,7 @@ namespace WebMConverter
             this.label14.Location = new System.Drawing.Point(237, 68);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(689, 34);
-            this.label14.TabIndex = 10;
+            this.label14.TabIndex = 5;
             this.label14.Text = "Advanced users only. Keep blank if you don\'t know what this means, it\'ll get calc" +
     "ulated automatically based on size limit.";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -503,7 +503,7 @@ namespace WebMConverter
             this.label12.Location = new System.Drawing.Point(3, 68);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(70, 34);
-            this.label12.TabIndex = 9;
+            this.label12.TabIndex = 4;
             this.label12.Text = "Bitrate:";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -514,7 +514,7 @@ namespace WebMConverter
             this.label11.Location = new System.Drawing.Point(237, 34);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(689, 34);
-            this.label11.TabIndex = 5;
+            this.label11.TabIndex = 3;
             this.label11.Text = resources.GetString("label11.Text");
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -525,7 +525,7 @@ namespace WebMConverter
             this.label10.Location = new System.Drawing.Point(3, 34);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(70, 34);
-            this.label10.TabIndex = 3;
+            this.label10.TabIndex = 2;
             this.label10.Text = "Crop video:";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -536,7 +536,7 @@ namespace WebMConverter
             this.label5.Location = new System.Drawing.Point(237, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(689, 34);
-            this.label5.TabIndex = 2;
+            this.label5.TabIndex = 1;
             this.label5.Text = "Enter nothing to keep resolution intact. Enter -1 in one of the fields to scale a" +
     "ccording to aspect ratio.";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -635,7 +635,7 @@ namespace WebMConverter
             this.labelThreads.Margin = new System.Windows.Forms.Padding(0);
             this.labelThreads.Name = "labelThreads";
             this.labelThreads.Size = new System.Drawing.Size(21, 28);
-            this.labelThreads.TabIndex = 25;
+            this.labelThreads.TabIndex = 1;
             this.labelThreads.Text = "1";
             this.labelThreads.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -734,7 +734,7 @@ namespace WebMConverter
             this.boxMetadataTitle.Location = new System.Drawing.Point(79, 3);
             this.boxMetadataTitle.Name = "boxMetadataTitle";
             this.boxMetadataTitle.Size = new System.Drawing.Size(152, 20);
-            this.boxMetadataTitle.TabIndex = 0;
+            this.boxMetadataTitle.TabIndex = 1;
             // 
             // label20
             // 
@@ -743,7 +743,7 @@ namespace WebMConverter
             this.label20.Location = new System.Drawing.Point(237, 0);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(689, 25);
-            this.label20.TabIndex = 2;
+            this.label20.TabIndex = 0;
             this.label20.Text = "Adds a string of text to the metadata of the video, which can be used to indicate" +
     " the source of a video, for example. Leave blank for no title.";
             this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
