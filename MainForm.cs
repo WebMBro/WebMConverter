@@ -197,9 +197,10 @@ namespace WebMConverter
             int threads = trackThreads.Value;
             bool multipass = checkBox2Pass.Checked;
 
-            string metadataTitle = "";
+            string title = Path.GetFileName(input); //Use name of input video if no title specified
             if (!string.IsNullOrWhiteSpace(boxMetadataTitle.Text))
-                metadataTitle = string.Format("-metadata title=\"{0}\"", boxMetadataTitle.Text.Replace("\"", "\\\""));
+                title = string.Format("-metadata title=\"{0}\"", boxMetadataTitle.Text.Replace("\"", "\\\""));
+            string metadataTitle = string.Format("-metadata title=\"{0}\"", title);
 
             string[] arguments;
             if (!multipass)
