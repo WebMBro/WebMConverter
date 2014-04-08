@@ -118,7 +118,7 @@ namespace WebMConverter
                 if (boxCropFrom.Text.Contains(":"))
                 {
                     TimeSpan timeStart;
-                    if (!TimeSpan.TryParse(boxCropFrom.Text, CultureInfo.InvariantCulture, out timeStart))
+                    if (!TimeSpan.TryParse(MakeParseFriendly(boxCropFrom.Text), CultureInfo.InvariantCulture, out timeStart))
                         return "Invalid start crop time!";
                     startSeconds = (float)timeStart.TotalSeconds;
                 }
@@ -141,7 +141,7 @@ namespace WebMConverter
                 if (boxCropTo.Text.Contains(":"))
                 {
                     TimeSpan timeEnd;
-                    if (!TimeSpan.TryParse(boxCropTo.Text, CultureInfo.InvariantCulture, out timeEnd))
+                    if (!TimeSpan.TryParse(MakeParseFriendly(boxCropTo.Text), CultureInfo.InvariantCulture, out timeEnd))
                         return "Invalid end crop time!";
                     endSeconds = (float)timeEnd.TotalSeconds;
                 }
@@ -218,6 +218,14 @@ namespace WebMConverter
             form.ShowDialog();
 
             return null;
+        }
+
+        private string MakeParseFriendly(string text)
+        {
+            //TODO: This method should add "00:" in front of text, if the text format is in either 00:00 or 00:00.00 format.
+            //TODO: Write a regex to detect this, then...
+            //return "00:" + text;
+            return text;
         }
 
         private void trackThreads_Scroll(object sender, EventArgs e)
