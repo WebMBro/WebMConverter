@@ -14,7 +14,7 @@ namespace WebMConverter
         {
             InitializeComponent();
 
-            _template = "{1} -i \"{0}\" {2} -c:v libvpx {3} -crf 32 -b:v {4}K {5} -threads {6} {7} {8} -f webm \"{9}\"";
+            _template = "{1} -i \"{0}\" {2} -c:v libvpx {3} -crf 32 -b:v {4}K {5} -threads {6} {7} {8} {9} -f webm \"{10}\"";
             //{0} is input file
             //{1} is -ss TIME if seek enabled otherwise blank
             //{2} is -to TIME if to enabled otherwise blank
@@ -24,7 +24,8 @@ namespace WebMConverter
             //{6} is amount of threads to use
             //{7} is -fs 3M if 3MB limit enabled otherwise blank
             //{8} is -pass NUM if using multipass, otherwise blank
-            //[9} is output file
+            //{9} is -metadata title="TITLE" when specifying a title, otherwise blank
+            //{10} is output file
 
         }
 
@@ -196,16 +197,20 @@ namespace WebMConverter
             int threads = trackThreads.Value;
             bool multipass = checkBox2Pass.Checked;
 
+            string metadataTitle = "";
+            if (!string.IsNullOrWhiteSpace(boxMetadataTitle.Text))
+                metadataTitle = string.Format("-metadata title=\"{0}\"", boxMetadataTitle.Text.Replace("\"", "\\\""));
+
             string[] arguments;
             if (!multipass)
-                arguments = new[] { string.Format(_template, input, start, end, audio, bitrate, size, threads, limitTo, "", output) };
+                arguments = new[] { string.Format(_template, input, start, end, audio, bitrate, size, threads, limitTo, "", metadataTitle, output) };
             else
             {
                 int passes = 2; //Can you even use more than 2 passes?
 
                 arguments = new string[passes];
                 for (int i = 0; i < passes; i++)
-                    arguments[i] = string.Format(_template, input, start, end, audio, bitrate, size, threads, limitTo, "-pass " + (i + 1), output);
+                    arguments[i] = string.Format(_template, input, start, end, audio, bitrate, size, threads, limitTo, "-pass " + (i + 1), metadataTitle, output);
             }
 
             var form = new ConverterForm(arguments);
