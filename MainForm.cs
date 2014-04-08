@@ -157,7 +157,7 @@ namespace WebMConverter
                 if (duration <= 0)
                     return "Video is 0 or less seconds long!";
 
-                end = "-to " + endSeconds.ToString(CultureInfo.InvariantCulture); //Convert comma to dot
+                end = "-to " + duration.ToString(CultureInfo.InvariantCulture); //Convert comma to dot
             }
 
             /*if (string.IsNullOrWhiteSpace(start) && !string.IsNullOrWhiteSpace(end) ||
