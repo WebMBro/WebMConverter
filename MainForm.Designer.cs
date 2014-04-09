@@ -44,7 +44,6 @@ namespace WebMConverter
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.label18 = new System.Windows.Forms.Label();
-            this.checkBox2Pass = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
@@ -81,6 +80,7 @@ namespace WebMConverter
             this.label19 = new System.Windows.Forms.Label();
             this.boxMetadataTitle = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
+            this.checkBox2Pass = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -147,7 +147,7 @@ namespace WebMConverter
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(941, 61);
-            this.tableLayoutPanel2.TabIndex = 1;
+            this.tableLayoutPanel2.TabIndex = 0;
             // 
             // buttonBrowseOut
             // 
@@ -205,7 +205,7 @@ namespace WebMConverter
             this.buttonGo.Name = "buttonGo";
             this.tableLayoutPanel2.SetRowSpan(this.buttonGo, 2);
             this.buttonGo.Size = new System.Drawing.Size(71, 55);
-            this.buttonGo.TabIndex = 4;
+            this.buttonGo.TabIndex = 6;
             this.buttonGo.Text = "Convert";
             this.buttonGo.UseVisualStyleBackColor = true;
             this.buttonGo.Click += new System.EventHandler(this.buttonGo_Click);
@@ -291,33 +291,22 @@ namespace WebMConverter
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.72727F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.62626F));
             this.tableLayoutPanel5.Size = new System.Drawing.Size(929, 198);
-            this.tableLayoutPanel5.TabIndex = 1;
+            this.tableLayoutPanel5.TabIndex = 0;
+            this.tableLayoutPanel5.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel5_Paint);
             // 
             // label18
             // 
             this.label18.AutoSize = true;
             this.label18.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label18.Location = new System.Drawing.Point(237, 160);
+            this.label18.Location = new System.Drawing.Point(237, 172);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(689, 38);
-            this.label18.TabIndex = 11;
+            this.label18.Size = new System.Drawing.Size(689, 26);
+            this.label18.TabIndex = 15;
             this.label18.Text = resources.GetString("label18.Text");
             this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // checkBox2Pass
-            // 
-            this.checkBox2Pass.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.tableLayoutPanel5.SetColumnSpan(this.checkBox2Pass, 2);
-            this.checkBox2Pass.Dock = System.Windows.Forms.DockStyle.Right;
-            this.checkBox2Pass.Location = new System.Drawing.Point(66, 163);
-            this.checkBox2Pass.Name = "checkBox2Pass";
-            this.checkBox2Pass.Size = new System.Drawing.Size(165, 32);
-            this.checkBox2Pass.TabIndex = 10;
-            this.checkBox2Pass.Text = "Enable 2-pass encoding:";
-            this.checkBox2Pass.UseVisualStyleBackColor = true;
             // 
             // label9
             // 
@@ -325,8 +314,8 @@ namespace WebMConverter
             this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label9.Location = new System.Drawing.Point(237, 128);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(689, 32);
-            this.label9.TabIndex = 9;
+            this.label9.Size = new System.Drawing.Size(689, 44);
+            this.label9.TabIndex = 13;
             this.label9.Text = "Advanced users only. Keep at default if you don\'t know what this means. Determine" +
     "s amount of threads ffmpeg uses. Try setting this to 1 if ffmpeg.exe crashes as " +
     "soon as you click Convert.";
@@ -338,8 +327,8 @@ namespace WebMConverter
             this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label7.Location = new System.Drawing.Point(3, 128);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(70, 32);
-            this.label7.TabIndex = 8;
+            this.label7.Size = new System.Drawing.Size(70, 44);
+            this.label7.TabIndex = 12;
             this.label7.Text = "Threads:";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -359,7 +348,7 @@ namespace WebMConverter
             this.tableLayoutPanel9.RowCount = 1;
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel9.Size = new System.Drawing.Size(158, 32);
-            this.tableLayoutPanel9.TabIndex = 22;
+            this.tableLayoutPanel9.TabIndex = 4;
             // 
             // boxCropTo
             // 
@@ -367,7 +356,7 @@ namespace WebMConverter
             this.boxCropTo.Location = new System.Drawing.Point(90, 6);
             this.boxCropTo.Name = "boxCropTo";
             this.boxCropTo.Size = new System.Drawing.Size(65, 20);
-            this.boxCropTo.TabIndex = 1;
+            this.boxCropTo.TabIndex = 2;
             // 
             // boxCropFrom
             // 
@@ -385,7 +374,7 @@ namespace WebMConverter
             this.label17.Margin = new System.Windows.Forms.Padding(0);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(16, 32);
-            this.label17.TabIndex = 0;
+            this.label17.TabIndex = 1;
             this.label17.Text = "to";
             this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -403,7 +392,7 @@ namespace WebMConverter
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel7.Size = new System.Drawing.Size(158, 32);
-            this.tableLayoutPanel7.TabIndex = 21;
+            this.tableLayoutPanel7.TabIndex = 10;
             // 
             // boxLimit
             // 
@@ -431,7 +420,7 @@ namespace WebMConverter
             this.label15.Location = new System.Drawing.Point(3, 96);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(70, 32);
-            this.label15.TabIndex = 6;
+            this.label15.TabIndex = 9;
             this.label15.Text = "Size limit:";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -442,7 +431,7 @@ namespace WebMConverter
             this.label6.Location = new System.Drawing.Point(237, 96);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(689, 32);
-            this.label6.TabIndex = 7;
+            this.label6.TabIndex = 11;
             this.label6.Text = "Will adjust the quality to attempt to stay below this limit, and cut off the end " +
     "of a video if needed. Leave blank for no limit. The limit on 4chan is 3 MB. If e" +
     "ntering decimals use dots, not commas.";
@@ -455,7 +444,7 @@ namespace WebMConverter
             this.label14.Location = new System.Drawing.Point(237, 64);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(689, 32);
-            this.label14.TabIndex = 5;
+            this.label14.TabIndex = 8;
             this.label14.Text = "Advanced users only. Keep blank if you don\'t know what this means, it\'ll get calc" +
     "ulated automatically based on size limit.";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -475,7 +464,7 @@ namespace WebMConverter
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayoutPanel8.Size = new System.Drawing.Size(158, 32);
-            this.tableLayoutPanel8.TabIndex = 12;
+            this.tableLayoutPanel8.TabIndex = 7;
             // 
             // boxBitrate
             // 
@@ -503,7 +492,7 @@ namespace WebMConverter
             this.label12.Location = new System.Drawing.Point(3, 64);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(70, 32);
-            this.label12.TabIndex = 4;
+            this.label12.TabIndex = 6;
             this.label12.Text = "Bitrate:";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -514,7 +503,7 @@ namespace WebMConverter
             this.label11.Location = new System.Drawing.Point(237, 32);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(689, 32);
-            this.label11.TabIndex = 3;
+            this.label11.TabIndex = 5;
             this.label11.Text = resources.GetString("label11.Text");
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -525,7 +514,7 @@ namespace WebMConverter
             this.label10.Location = new System.Drawing.Point(3, 32);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(70, 32);
-            this.label10.TabIndex = 2;
+            this.label10.TabIndex = 3;
             this.label10.Text = "Crop video:";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -536,7 +525,7 @@ namespace WebMConverter
             this.label5.Location = new System.Drawing.Point(237, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(689, 32);
-            this.label5.TabIndex = 1;
+            this.label5.TabIndex = 2;
             this.label5.Text = "Enter nothing to keep resolution intact. Enter -1 in one of the fields to scale a" +
     "ccording to aspect ratio.";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -577,7 +566,7 @@ namespace WebMConverter
             this.boxResH.Location = new System.Drawing.Point(90, 6);
             this.boxResH.Name = "boxResH";
             this.boxResH.Size = new System.Drawing.Size(65, 20);
-            this.boxResH.TabIndex = 1;
+            this.boxResH.TabIndex = 2;
             // 
             // boxResW
             // 
@@ -595,7 +584,7 @@ namespace WebMConverter
             this.label8.Margin = new System.Windows.Forms.Padding(0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(16, 32);
-            this.label8.TabIndex = 0;
+            this.label8.TabIndex = 1;
             this.label8.Text = "x";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -611,7 +600,7 @@ namespace WebMConverter
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
             this.tableLayoutPanel10.RowCount = 1;
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(152, 26);
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(152, 38);
             this.tableLayoutPanel10.TabIndex = 25;
             // 
             // trackThreads
@@ -622,7 +611,7 @@ namespace WebMConverter
             this.trackThreads.Maximum = 16;
             this.trackThreads.Minimum = 1;
             this.trackThreads.Name = "trackThreads";
-            this.trackThreads.Size = new System.Drawing.Size(131, 26);
+            this.trackThreads.Size = new System.Drawing.Size(131, 38);
             this.trackThreads.TabIndex = 0;
             this.trackThreads.Value = 1;
             this.trackThreads.Scroll += new System.EventHandler(this.trackThreads_Scroll);
@@ -634,7 +623,7 @@ namespace WebMConverter
             this.labelThreads.Location = new System.Drawing.Point(131, 0);
             this.labelThreads.Margin = new System.Windows.Forms.Padding(0);
             this.labelThreads.Name = "labelThreads";
-            this.labelThreads.Size = new System.Drawing.Size(21, 26);
+            this.labelThreads.Size = new System.Drawing.Size(21, 38);
             this.labelThreads.TabIndex = 1;
             this.labelThreads.Text = "1";
             this.labelThreads.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -743,11 +732,23 @@ namespace WebMConverter
             this.label20.Location = new System.Drawing.Point(237, 0);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(689, 32);
-            this.label20.TabIndex = 0;
+            this.label20.TabIndex = 2;
             this.label20.Text = "Adds a string of text to the metadata of the video, which can be used to indicate" +
     " the source of a video, for example. If left blank, it\'ll use the name of the in" +
     "put video.";
             this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // checkBox2Pass
+            // 
+            this.checkBox2Pass.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tableLayoutPanel5.SetColumnSpan(this.checkBox2Pass, 2);
+            this.checkBox2Pass.Dock = System.Windows.Forms.DockStyle.Right;
+            this.checkBox2Pass.Location = new System.Drawing.Point(66, 175);
+            this.checkBox2Pass.Name = "checkBox2Pass";
+            this.checkBox2Pass.Size = new System.Drawing.Size(165, 20);
+            this.checkBox2Pass.TabIndex = 11;
+            this.checkBox2Pass.Text = "Enable 2-pass encoding:";
+            this.checkBox2Pass.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -838,12 +839,12 @@ namespace WebMConverter
         private System.Windows.Forms.Label labelThreads;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.CheckBox checkBox2Pass;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox boxMetadataTitle;
         private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.CheckBox checkBox2Pass;
     }
 }
 
