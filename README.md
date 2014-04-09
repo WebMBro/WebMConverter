@@ -16,3 +16,5 @@ Important to know:
 Screenshot:
 
 ![Screenshot](http://a.pomf.se/jwlkfd.PNG)
+
+This software is released under the MIT license. See [LICENSE.md] (https://github.com/WebMBro/WebMConverter/blob/master/LICENSE.md).
