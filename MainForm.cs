@@ -10,8 +10,11 @@ namespace WebMConverter
     public partial class MainForm : Form
     {
         private string _template;
+        private string _templateArguments;
         private string _autoOutput;
         private string _autoTitle;
+        private string _autoArguments;
+        private bool _argumentError;
 
         public MainForm()
         {
@@ -21,19 +24,19 @@ namespace WebMConverter
             DragEnter += HandleDragEnter;
             DragDrop += HandleDragDrop;
 
-            _template = "{1} -i \"{0}\" {2} -c:v libvpx {3} -crf 32 -b:v {4}K {5} -threads {6} {7} {8} {9} -f webm \"{10}\"";
+            _templateArguments = "-an -c:v libvpx -crf 32 -b:v {0}K {1} -threads {2} {3} {4}";
+            //{0} is bitrate in kb/s
+            //{1} is -vf scale=WIDTH:HEIGHT if set otherwise blank
+            //{2} is amount of threads to use
+            //{3} is -fs 3M if 3MB limit enabled otherwise blank
+            //{4} is -metadata title="TITLE" when specifying a title, otherwise blank
+            _template = "{2} -i \"{0}\" {3} {4} {5} -f webm \"{1}\"";
             //{0} is input file
-            //{1} is -ss TIME if seek enabled otherwise blank
-            //{2} is -to TIME if to enabled otherwise blank
-            //{3} is -an if no audio otherwise blank
-            //{4} is bitrate in kb/s
-            //{5} is -vf scale=WIDTH:HEIGHT if set otherwise blank
-            //{6} is amount of threads to use
-            //{7} is -fs 3M if 3MB limit enabled otherwise blank
-            //{8} is -pass NUM if using multipass, otherwise blank
-            //{9} is -metadata title="TITLE" when specifying a title, otherwise blank
-            //{10} is output file
-
+            //{1} is output file
+            //{2} is TIME if seek enabled otherwise blank
+            //{3} is TIME if to enabled otherwise blank
+            //{4} is extra arguments
+            //{5} is pass number if 2-pass enabled otherwise blank
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -102,7 +105,7 @@ namespace WebMConverter
         }
 
         char[] invalidChars = Path.GetInvalidPathChars();
-
+        
         private string Convert()
         {
             string input = textBoxIn.Text;
@@ -124,69 +127,48 @@ namespace WebMConverter
             if (input == output)
                 return "Input and output files are the same!";
 
-            int width = 0;
-            int height = 0;
+            float startSeconds, endSeconds;
 
-            if (!string.IsNullOrWhiteSpace(boxResW.Text) || !string.IsNullOrWhiteSpace(boxResH.Text))
+            try
             {
-                if (!int.TryParse(boxResW.Text, out width))
-                    return "Invalid width!";
-                if (!int.TryParse(boxResH.Text, out height))
-                    return "Invalid height!";
+                startSeconds = ParseTime(boxCropFrom.Text);
+            }
+            catch (ArgumentException)
+            {
+                return "Invalid start crop time!";
+            }
+            try
+            {
+                endSeconds = ParseTime(boxCropTo.Text);
+            }
+            catch (ArgumentException)
+            {
+                return "Invalid end cropt time!";
             }
 
-            if ((!string.IsNullOrWhiteSpace(boxResW.Text) && string.IsNullOrWhiteSpace(boxResH.Text)) ||
-                (string.IsNullOrWhiteSpace(boxResW.Text) && !string.IsNullOrWhiteSpace(boxResH.Text)))
-                return "One of the width/height fields isn't filled in! Either fill none of them, or both of them!";
+            string options = textBoxArguments.Text;
+            try
+            {
+                if (options.Trim() == "" || _argumentError)
+                    options = GenerateArguments();
+            }
+            catch (ArgumentException e)
+            {
+                return e.Message;
+            }
 
-            //Try fo figure out if begin/end are correct
-            //1. if it contains a :, it's probably a time, try to convert using DateTime.Parse
-            //2. if not, try int.tryparse
-
-            float startSeconds = 0;
             string start = "";
             string end = "";
 
-            if (!string.IsNullOrWhiteSpace(boxCropFrom.Text))
+            if (startSeconds != 0.0)
             {
-                if (boxCropFrom.Text.Contains(":"))
-                {
-                    TimeSpan timeStart;
-                    if (!TimeSpan.TryParse(MakeParseFriendly(boxCropFrom.Text), CultureInfo.InvariantCulture, out timeStart))
-                        return "Invalid start crop time!";
-                    startSeconds = (float)timeStart.TotalSeconds;
-                }
-                else
-                {
-                    float timeStart;
-                    if (!float.TryParse(boxCropFrom.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out timeStart))
-                        return "Invalid start crop time!";
-                    startSeconds = timeStart;
-                }
-
                 start = "-ss " + startSeconds.ToString(CultureInfo.InvariantCulture); //Convert comma to dot
             }
 
             float duration = 0;
 
-            if (!string.IsNullOrWhiteSpace(boxCropTo.Text))
+            if (endSeconds != 0.0)
             {
-                float endSeconds;
-                if (boxCropTo.Text.Contains(":"))
-                {
-                    TimeSpan timeEnd;
-                    if (!TimeSpan.TryParse(MakeParseFriendly(boxCropTo.Text), CultureInfo.InvariantCulture, out timeEnd))
-                        return "Invalid end crop time!";
-                    endSeconds = (float)timeEnd.TotalSeconds;
-                }
-                else
-                {
-                    float timeEnd;
-                    if (!float.TryParse(boxCropTo.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out timeEnd))
-                        return "Invalid end crop time!";
-                    endSeconds = timeEnd;
-                }
-
                 duration = endSeconds - startSeconds;
                 if (duration <= 0)
                     return "Video is 0 or less seconds long!";
@@ -194,12 +176,104 @@ namespace WebMConverter
                 end = "-to " + duration.ToString(CultureInfo.InvariantCulture); //Convert comma to dot
             }
 
+            string[] arguments;
+            if (!checkBox2Pass.Checked)
+                arguments = new[] { string.Format(_template, input, output, start, end, options, "") };
+            else
+            {
+                int passes = 2; //Can you even use more than 2 passes?
+
+                arguments = new string[passes];
+                for (int i = 0; i < passes; i++)
+                    arguments[i] = string.Format(_template, input, output, start, end, options, "-pass " + (i + 1));
+            }
+
+            var form = new ConverterForm(arguments);
+            form.ShowDialog();
+
+            return null;
+        }
+
+        private float ParseTime(string text)
+        {
+            //Try fo figure out if begin/end are correct
+            //1. if it contains a :, it's probably a time, try to convert using DateTime.Parse
+            //2. if not, try int.tryparse
+
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                if (text.Contains(":"))
+                {
+                    TimeSpan time;
+                    if (!TimeSpan.TryParse(MakeParseFriendly(text), CultureInfo.InvariantCulture, out time))
+                        throw new ArgumentException("Invalid time!");
+                    return (float)time.TotalSeconds;
+                }
+                else
+                {
+                    float time;
+                    if (!float.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out time))
+                        throw new ArgumentException("Invalid time!");
+                    return time;
+                }
+            }
+            return 0.0f;
+        }
+
+        private void UpdateArguments(object sender, EventArgs e)
+        {
+            try
+            {
+                string arguments = GenerateArguments();
+                if (arguments != _autoArguments || _argumentError)
+                {
+                    textBoxArguments.Text = _autoArguments = arguments;
+                    _argumentError = false;
+                }
+            }
+            catch (ArgumentException argExc)
+            {
+                textBoxArguments.Text = "ERROR: " + argExc.Message;
+                _argumentError = true;
+            }
+        }
+
+        private string GenerateArguments()
+        {
+            string args = "";
+            int width = 0;
+            int height = 0;
+
+            if (!string.IsNullOrWhiteSpace(boxResW.Text) || !string.IsNullOrWhiteSpace(boxResH.Text))
+            {
+                if (!int.TryParse(boxResW.Text, out width))
+                    throw new ArgumentException("Invalid width!");
+                if (!int.TryParse(boxResH.Text, out height))
+                    throw new ArgumentException("Invalid height!");
+            }
+
+            if ((!string.IsNullOrWhiteSpace(boxResW.Text) && string.IsNullOrWhiteSpace(boxResH.Text)) ||
+                (string.IsNullOrWhiteSpace(boxResW.Text) && !string.IsNullOrWhiteSpace(boxResH.Text)))
+                throw new ArgumentException("One of the width/height fields isn't filled in! Either fill none of them, or both of them!");
+
+            float startSeconds = ParseTime(boxCropFrom.Text);
+
+            float duration = 0;
+
+            float endSeconds = ParseTime(boxCropTo.Text);
+            if (endSeconds != 0.0)
+            {
+                duration = endSeconds - startSeconds;
+                if (duration <= 0)
+                    throw new ArgumentException("Video is 0 or less seconds long!");
+            }
+
             float limit = 0;
             string limitTo = "";
             if (!string.IsNullOrWhiteSpace(boxLimit.Text))
             {
                 if (!float.TryParse(boxLimit.Text, out limit))
-                    return "Invalid size limit!";
+                    throw new ArgumentException("Invalid size limit!");
                 limitTo = string.Format("-fs {0}M", limit.ToString(CultureInfo.InvariantCulture)); //Should turn comma into dot
             }
 
@@ -214,39 +288,22 @@ namespace WebMConverter
             //24576/60 = 409.6 kilobits/sec
 
             int bitrate = 900;
-            if (duration != 0 && limit != 0) bitrate = (int)(8192 * limit / duration);
+            if (duration != 0 && limit != 0)
+            {
+                bitrate = (int)(8192 * limit / duration);
+            }
 
             if (!string.IsNullOrWhiteSpace(boxBitrate.Text))
                 if (!int.TryParse(boxBitrate.Text, out bitrate))
-                    return "Invalid bitrate!";
-
-            string audio = "";
-            if (!checkBoxAudio.Checked) //Remember, if the box ISN'T checked, the tag gets added
-                audio = "-an";
+                    throw new ArgumentException("Invalid bitrate!");
 
             int threads = trackThreads.Value;
-            bool multipass = checkBox2Pass.Checked;
 
             string metadataTitle = "";
             if (!string.IsNullOrWhiteSpace(boxMetadataTitle.Text))
                 metadataTitle = string.Format("-metadata title=\"{0}\"", boxMetadataTitle.Text.Replace("\"", "\\\""));
 
-            string[] arguments;
-            if (!multipass)
-                arguments = new[] { string.Format(_template, input, start, end, audio, bitrate, size, threads, limitTo, "", metadataTitle, output) };
-            else
-            {
-                int passes = 2; //Can you even use more than 2 passes?
-
-                arguments = new string[passes];
-                for (int i = 0; i < passes; i++)
-                    arguments[i] = string.Format(_template, input, start, end, audio, bitrate, size, threads, limitTo, "-pass " + (i + 1), metadataTitle, output);
-            }
-
-            var form = new ConverterForm(arguments);
-            form.ShowDialog();
-
-            return null;
+            return string.Format(_templateArguments, bitrate, size, threads, limitTo, metadataTitle);
         }
 
         private string MakeParseFriendly(string text)
@@ -264,9 +321,10 @@ namespace WebMConverter
         private void trackThreads_Scroll(object sender, EventArgs e)
         {
             labelThreads.Text = trackThreads.Value.ToString();
+            UpdateArguments(sender, e);
         }
 
-        private void tableLayoutPanel5_Paint(object sender, PaintEventArgs e)
+        private void label18_Click(object sender, EventArgs e)
         {
 
         }
