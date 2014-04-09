@@ -9,16 +9,16 @@ namespace WebMConverter
     public partial class MainForm : Form
     {
         private string _template;
-        private string autoOutput;
-        private string autoTitle;
+        private string _autoOutput;
+        private string _autoTitle;
 
         public MainForm()
         {
             InitializeComponent();
 
-            this.AllowDrop = true;
-            this.DragEnter += new DragEventHandler(HandleDragEnter);
-            this.DragDrop += new DragEventHandler(HandleDragDrop);
+            AllowDrop = true;
+            DragEnter += HandleDragEnter;
+            DragDrop += HandleDragDrop;
 
             _template = "{1} -i \"{0}\" {2} -c:v libvpx {3} -crf 32 -b:v {4}K {5} -threads {6} {7} {8} {9} -f webm \"{10}\"";
             //{0} is input file
@@ -58,24 +58,19 @@ namespace WebMConverter
         private void SetFile(string path)
         {
             textBoxIn.Text = path;
+            string fullPath = Path.GetDirectoryName(path);
             string name = Path.GetFileNameWithoutExtension(path);
-            if (boxMetadataTitle.Text == autoTitle || boxMetadataTitle.Text == "")
-                boxMetadataTitle.Text = autoTitle = name;
-            if (textBoxOut.Text == autoOutput || textBoxOut.Text == "")
-                textBoxOut.Text = autoOutput = name + ".webm";
+            if (boxMetadataTitle.Text == _autoTitle || boxMetadataTitle.Text == "")
+                boxMetadataTitle.Text = _autoTitle = name;
+            if (textBoxOut.Text == _autoOutput || textBoxOut.Text == "")
+                textBoxOut.Text = _autoOutput = Path.Combine(fullPath, name + ".webm");
         }
 
         private void HandleDragEnter(object sender, DragEventArgs e)
         {
             // show copy cursor for files
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                e.Effect = DragDropEffects.Copy;
-            }
-            else
-            {
-                e.Effect = DragDropEffects.None;
-            }
+            bool dataPresent = e.Data.GetDataPresent(DataFormats.FileDrop);
+            e.Effect = dataPresent ? DragDropEffects.Copy : DragDropEffects.None;
         }
 
         private void HandleDragDrop(object sender, DragEventArgs e)

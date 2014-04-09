@@ -743,15 +743,10 @@ namespace WebMConverter
             this.label20.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label20.Location = new System.Drawing.Point(492, 0);
             this.label20.Name = "label20";
-//<<<<<<< HEAD
-            this.label20.Size = new System.Drawing.Size(689, 32);
+            this.label20.Size = new System.Drawing.Size(434, 32);
             this.label20.TabIndex = 2;
-//=======
-//            this.label20.Size = new System.Drawing.Size(434, 32);
-//            this.label20.TabIndex = 0;
-//>>>>>>> 46525b456ad68af9cd33019b524191ffcd8c58d9
             this.label20.Text = "Adds a string of text to the metadata of the video, which can be used to indicate" +
-    " the source of a video, for example.";
+    " the source of a video, for example. Leave blank for no title.";
             this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // MainForm
