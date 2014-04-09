@@ -756,7 +756,7 @@ namespace WebMConverter
             this.ClientSize = new System.Drawing.Size(959, 444);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(550, 393);
+            this.MinimumSize = new System.Drawing.Size(975, 483);
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "WebM for***REMOVED***s";
