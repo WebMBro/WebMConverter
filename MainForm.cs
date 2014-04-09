@@ -232,5 +232,10 @@ namespace WebMConverter
         {
             labelThreads.Text = trackThreads.Value.ToString();
         }
+
+        private void tableLayoutPanel5_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

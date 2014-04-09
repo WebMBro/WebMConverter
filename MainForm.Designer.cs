@@ -44,6 +44,7 @@ namespace WebMConverter
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.label18 = new System.Windows.Forms.Label();
+            this.checkBox2Pass = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
@@ -80,7 +81,6 @@ namespace WebMConverter
             this.label19 = new System.Windows.Forms.Label();
             this.boxMetadataTitle = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
-            this.checkBox2Pass = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -307,6 +307,18 @@ namespace WebMConverter
             this.label18.TabIndex = 15;
             this.label18.Text = resources.GetString("label18.Text");
             this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // checkBox2Pass
+            // 
+            this.checkBox2Pass.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tableLayoutPanel5.SetColumnSpan(this.checkBox2Pass, 2);
+            this.checkBox2Pass.Dock = System.Windows.Forms.DockStyle.Right;
+            this.checkBox2Pass.Location = new System.Drawing.Point(66, 175);
+            this.checkBox2Pass.Name = "checkBox2Pass";
+            this.checkBox2Pass.Size = new System.Drawing.Size(165, 20);
+            this.checkBox2Pass.TabIndex = 11;
+            this.checkBox2Pass.Text = "Enable 2-pass encoding:";
+            this.checkBox2Pass.UseVisualStyleBackColor = true;
             // 
             // label9
             // 
@@ -738,24 +750,13 @@ namespace WebMConverter
     "put video.";
             this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // checkBox2Pass
-            // 
-            this.checkBox2Pass.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.tableLayoutPanel5.SetColumnSpan(this.checkBox2Pass, 2);
-            this.checkBox2Pass.Dock = System.Windows.Forms.DockStyle.Right;
-            this.checkBox2Pass.Location = new System.Drawing.Point(66, 175);
-            this.checkBox2Pass.Name = "checkBox2Pass";
-            this.checkBox2Pass.Size = new System.Drawing.Size(165, 20);
-            this.checkBox2Pass.TabIndex = 11;
-            this.checkBox2Pass.Text = "Enable 2-pass encoding:";
-            this.checkBox2Pass.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(959, 444);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(550, 393);
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(3);
