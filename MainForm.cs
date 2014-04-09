@@ -120,6 +120,9 @@ namespace WebMConverter
             if (!File.Exists(input))
                 return "Input file doesn't exist!";
 
+            if (input == output)
+                return "Input and output files are the same!";
+
             int width = 0;
             int height = 0;
 
@@ -189,10 +192,6 @@ namespace WebMConverter
 
                 end = "-to " + duration.ToString(CultureInfo.InvariantCulture); //Convert comma to dot
             }
-
-            /*if (string.IsNullOrWhiteSpace(start) && !string.IsNullOrWhiteSpace(end) ||
-                !string.IsNullOrWhiteSpace(start) && string.IsNullOrWhiteSpace(end))
-                return "One of the crop time fields is empty! Either empty them both, or fill them both.";*/
 
             float limit = 0;
             string limitTo = "";
