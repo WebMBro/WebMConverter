@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace WebMConverter
@@ -250,9 +251,13 @@ namespace WebMConverter
 
         private string MakeParseFriendly(string text)
         {
-            //TODO: This method should add "00:" in front of text, if the text format is in either 00:00 or 00:00.00 format.
-            //TODO: Write a regex to detect this, then...
-            //return "00:" + text;
+            //This method adds "00:" in front of text, if the text format is in either 00:00 or 00:00.00 format.
+            //This pattern should work.
+
+            string pattern = @"^[0-5][0-9]:[0-5][0-9](\.[0-9]+)?$";
+            Regex regex = new Regex(pattern, RegexOptions.Singleline);
+            if (regex.IsMatch(text))
+                return "00:" + text;
             return text;
         }
 
