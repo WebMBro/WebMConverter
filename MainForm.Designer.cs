@@ -607,7 +607,7 @@ namespace WebMConverter
             this.label14.Size = new System.Drawing.Size(681, 32);
             this.label14.TabIndex = 8;
             this.label14.Text = "Determines the quality of the video. Keep blank to let the program pick one based" +
-    " on size limit.";
+    " on size limit and duration.";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tableLayoutPanel8
