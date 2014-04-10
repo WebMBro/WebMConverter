@@ -54,6 +54,12 @@
     <Compile Include="ConverterForm.Designer.cs">
       <DependentUpon>ConverterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CropForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CropForm.Designer.cs">
+      <DependentUpon>CropForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +70,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ConverterForm.resx">
       <DependentUpon>ConverterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CropForm.resx">
+      <DependentUpon>CropForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
