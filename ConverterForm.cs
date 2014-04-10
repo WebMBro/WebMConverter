@@ -156,8 +156,14 @@ namespace WebMConverter
 
             if (_process.ExitCode != 0)
             {
-                textBoxOutput.AppendText(string.Format("\n\nffmpeg.exe exited with exit code {0}. That's usually bad.", _process.ExitCode));
+                if (_cancelMultipass)
+                    textBoxOutput.AppendText("\n\nConversion cancelled.");
+                else
+                    textBoxOutput.AppendText(string.Format("\n\nffmpeg.exe exited with exit code {0}. That's usually bad.", _process.ExitCode));
                 pictureBox.BackgroundImage = Properties.Resources.cross;
+
+                if (_process.ExitCode == -1073741819) //This error keeps happening for me if I set threads to anything above 1, might happen for other people too
+                    MessageBox.Show("It appears ffmpeg.exe crashed because of a thread error. Set the amount of threads to 1 in the advanced tab and try again.", "FYI", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
