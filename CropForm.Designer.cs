@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonReset = new System.Windows.Forms.Button();
+            this.boxH = new System.Windows.Forms.TextBox();
+            this.boxW = new System.Windows.Forms.TextBox();
+            this.boxY = new System.Windows.Forms.TextBox();
             this.buttonConfirm = new System.Windows.Forms.Button();
             this.pictureBoxVideo = new System.Windows.Forms.PictureBox();
+            this.buttonReset = new System.Windows.Forms.Button();
             this.boxX = new System.Windows.Forms.TextBox();
-            this.boxY = new System.Windows.Forms.TextBox();
-            this.boxW = new System.Windows.Forms.TextBox();
-            this.boxH = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxVideo)).BeginInit();
             this.SuspendLayout();
@@ -64,16 +64,29 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(298, 345);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // buttonReset
+            // boxH
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.buttonReset, 2);
-            this.buttonReset.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonReset.Location = new System.Drawing.Point(3, 317);
-            this.buttonReset.Name = "buttonReset";
-            this.buttonReset.Size = new System.Drawing.Size(142, 25);
-            this.buttonReset.TabIndex = 1;
-            this.buttonReset.Text = "Reset";
-            this.buttonReset.UseVisualStyleBackColor = true;
+            this.boxH.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.boxH.Location = new System.Drawing.Point(225, 290);
+            this.boxH.Name = "boxH";
+            this.boxH.Size = new System.Drawing.Size(70, 20);
+            this.boxH.TabIndex = 6;
+            // 
+            // boxW
+            // 
+            this.boxW.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.boxW.Location = new System.Drawing.Point(151, 290);
+            this.boxW.Name = "boxW";
+            this.boxW.Size = new System.Drawing.Size(68, 20);
+            this.boxW.TabIndex = 5;
+            // 
+            // boxY
+            // 
+            this.boxY.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.boxY.Location = new System.Drawing.Point(77, 290);
+            this.boxY.Name = "boxY";
+            this.boxY.Size = new System.Drawing.Size(68, 20);
+            this.boxY.TabIndex = 4;
             // 
             // buttonConfirm
             // 
@@ -88,6 +101,7 @@
             // 
             // pictureBoxVideo
             // 
+            this.pictureBoxVideo.BackColor = System.Drawing.SystemColors.ControlDark;
             this.tableLayoutPanel1.SetColumnSpan(this.pictureBoxVideo, 4);
             this.pictureBoxVideo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxVideo.Location = new System.Drawing.Point(3, 3);
@@ -95,6 +109,23 @@
             this.pictureBoxVideo.Size = new System.Drawing.Size(292, 281);
             this.pictureBoxVideo.TabIndex = 0;
             this.pictureBoxVideo.TabStop = false;
+            this.pictureBoxVideo.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxVideo_Paint);
+            this.pictureBoxVideo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxVideo_MouseDown);
+            this.pictureBoxVideo.MouseEnter += new System.EventHandler(this.pictureBoxVideo_MouseEnter);
+            this.pictureBoxVideo.MouseLeave += new System.EventHandler(this.pictureBoxVideo_MouseLeave);
+            this.pictureBoxVideo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxVideo_MouseMove);
+            this.pictureBoxVideo.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxVideo_MouseUp);
+            // 
+            // buttonReset
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.buttonReset, 2);
+            this.buttonReset.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonReset.Location = new System.Drawing.Point(3, 317);
+            this.buttonReset.Name = "buttonReset";
+            this.buttonReset.Size = new System.Drawing.Size(142, 25);
+            this.buttonReset.TabIndex = 1;
+            this.buttonReset.Text = "Reset";
+            this.buttonReset.UseVisualStyleBackColor = true;
             // 
             // boxX
             // 
@@ -103,30 +134,6 @@
             this.boxX.Name = "boxX";
             this.boxX.Size = new System.Drawing.Size(68, 20);
             this.boxX.TabIndex = 3;
-            // 
-            // boxY
-            // 
-            this.boxY.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.boxY.Location = new System.Drawing.Point(77, 290);
-            this.boxY.Name = "boxY";
-            this.boxY.Size = new System.Drawing.Size(68, 20);
-            this.boxY.TabIndex = 4;
-            // 
-            // boxW
-            // 
-            this.boxW.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.boxW.Location = new System.Drawing.Point(151, 290);
-            this.boxW.Name = "boxW";
-            this.boxW.Size = new System.Drawing.Size(68, 20);
-            this.boxW.TabIndex = 5;
-            // 
-            // boxH
-            // 
-            this.boxH.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.boxH.Location = new System.Drawing.Point(225, 290);
-            this.boxH.Name = "boxH";
-            this.boxH.Size = new System.Drawing.Size(70, 20);
-            this.boxH.TabIndex = 6;
             // 
             // CropForm
             // 
