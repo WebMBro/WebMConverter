@@ -42,8 +42,11 @@ namespace WebMConverter
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            int threads = Environment.ProcessorCount;  //Set thread slider to default of 4
-            trackThreads.Value = Math.Min(trackThreads.Maximum, Math.Max(trackThreads.Minimum, threads));
+            //Keeping this disabled for now because threads are crashy
+
+            //int threads = Environment.ProcessorCount;  //Set thread slider to default of 4
+            //trackThreads.Value = Math.Min(trackThreads.Maximum, Math.Max(trackThreads.Minimum, threads));
+
             trackThreads_Scroll(sender, e); //Update label
         }
 
@@ -144,7 +147,7 @@ namespace WebMConverter
             }
             catch (ArgumentException)
             {
-                return "Invalid end cropt time!";
+                return "Invalid end crop time!";
             }
 
             string options = textBoxArguments.Text;
