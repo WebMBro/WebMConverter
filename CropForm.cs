@@ -148,11 +148,20 @@ namespace WebMConverter
             pictureBoxVideo.Invalidate();
         }
 
+        Font f = new Font(FontFamily.GenericSansSerif, 11f);
+
         private void pictureBoxVideo_Paint(object sender, PaintEventArgs e)
         {
             var g = e.Graphics;
 
             g.SmoothingMode = SmoothingMode.HighQuality;
+
+            for (int i = 0; i < 2; i++)
+            {
+                g.DrawString("Generating preview...", f, new SolidBrush(Color.FromArgb(i * 255, i * 255, i * 255)), 5, 5 - i);
+            }
+
+            return; //Todo: actually do something here
 
             var edgePen = new Pen(Color.White, 1f);
             var dotBrush = new SolidBrush(Color.White);
