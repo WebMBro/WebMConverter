@@ -24,12 +24,13 @@ namespace WebMConverter
             DragEnter += HandleDragEnter;
             DragDrop += HandleDragDrop;
 
-            _templateArguments = "-an -c:v libvpx -crf 32 -b:v {0}K {1} -threads {2} {3} {4}";
-            //{0} is bitrate in kb/s
-            //{1} is -vf scale=WIDTH:HEIGHT if set otherwise blank
-            //{2} is amount of threads to use
-            //{3} is -fs 3M if 3MB limit enabled otherwise blank
-            //{4} is -metadata title="TITLE" when specifying a title, otherwise blank
+            _templateArguments = "{0} -c:v libvpx -crf 32 -b:v {1}K {2} -threads {3} {4} {5}";
+            //{0} is -an if no audio, otherwise blank
+            //{1} is bitrate in kb/s
+            //{2} is -vf scale=WIDTH:HEIGHT if set otherwise blank
+            //{3} is amount of threads to use
+            //{4} is -fs 3M if 3MB limit enabled otherwise blank
+            //{5} is -metadata title="TITLE" when specifying a title, otherwise blank
             _template = "{2} -i \"{0}\" {3} {4} {5} -f webm \"{1}\"";
             //{0} is input file
             //{1} is output file
@@ -303,7 +304,8 @@ namespace WebMConverter
             if (!string.IsNullOrWhiteSpace(boxMetadataTitle.Text))
                 metadataTitle = string.Format("-metadata title=\"{0}\"", boxMetadataTitle.Text.Replace("\"", "\\\""));
 
-            return string.Format(_templateArguments, bitrate, size, threads, limitTo, metadataTitle);
+            string audioEnabled = boxAudio.Checked ? "" : "-an"; //-an if no audio
+            return string.Format(_templateArguments, audioEnabled, bitrate, size, threads, limitTo, metadataTitle);
         }
 
         private string MakeParseFriendly(string text)
