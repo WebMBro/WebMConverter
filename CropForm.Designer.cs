@@ -87,6 +87,7 @@
             this.MinimumSize = new System.Drawing.Size(227, 114);
             this.Name = "CropForm";
             this.Text = "Crop your video";
+            this.Load += new System.EventHandler(this.CropForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxVideo)).EndInit();
             this.ResumeLayout(false);
 

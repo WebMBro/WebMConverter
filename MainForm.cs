@@ -222,7 +222,7 @@ namespace WebMConverter
                     arguments[i] = string.Format(_template, input, output, start, end, options, "-pass " + (i + 1));
             }
 
-            var form = new ConverterForm(arguments);
+            var form = new ConverterForm(this, arguments);
             form.ShowDialog();
 
             return null;

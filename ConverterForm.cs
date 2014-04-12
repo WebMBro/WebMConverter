@@ -14,15 +14,18 @@ namespace WebMConverter
         private bool _ended;
         private bool _panic;
 
+        int currentPass = 0;
         private bool _multipass;
         private bool _cancelMultipass;
 
-        public ConverterForm(string[] args)
+        private MainForm _owner;
+
+        public ConverterForm(MainForm mainForm, string[] args)
         {
             InitializeComponent();
 
             _arguments = args;
-
+            _owner = mainForm;
         }
 
         private void ProcessOnErrorDataReceived(object sender, DataReceivedEventArgs args)
@@ -96,8 +99,6 @@ namespace WebMConverter
             _process.StandardInput.Write("y\n"); //Confirm overwrite
         }
 
-        int currentPass = 0;
-
         private void MultiPass(string[] arguments, string ffmpeg)
         {
             int passes = arguments.Length;
@@ -167,6 +168,8 @@ namespace WebMConverter
             {
                 textBoxOutput.AppendText("\n\nVideo converted succesfully!");
                 pictureBox.BackgroundImage = Properties.Resources.tick;
+
+                buttonPlay.Enabled = true;
             }
 
             buttonCancel.Text = "Close";
@@ -196,6 +199,11 @@ namespace WebMConverter
         private void ConverterForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             _process.Dispose();
+        }
+
+        private void buttonPlay_Click(object sender, EventArgs e)
+        {
+            Process.Start(_owner.textBoxOut.Text); //Play result video
         }
     }
 }

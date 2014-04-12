@@ -32,17 +32,20 @@
             this.textBoxOutput = new System.Windows.Forms.RichTextBox();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.buttonPlay = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.buttonPlay, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.textBoxOutput, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.buttonCancel, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.buttonCancel, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.pictureBox, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
@@ -56,7 +59,7 @@
             // textBoxOutput
             // 
             this.textBoxOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tableLayoutPanel1.SetColumnSpan(this.textBoxOutput, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.textBoxOutput, 3);
             this.textBoxOutput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxOutput.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxOutput.Location = new System.Drawing.Point(3, 3);
@@ -69,9 +72,9 @@
             // buttonCancel
             // 
             this.buttonCancel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonCancel.Location = new System.Drawing.Point(34, 407);
+            this.buttonCancel.Location = new System.Drawing.Point(357, 407);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(641, 25);
+            this.buttonCancel.Size = new System.Drawing.Size(318, 25);
             this.buttonCancel.TabIndex = 3;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -89,6 +92,18 @@
             this.pictureBox.Size = new System.Drawing.Size(25, 25);
             this.pictureBox.TabIndex = 4;
             this.pictureBox.TabStop = false;
+            // 
+            // buttonPlay
+            // 
+            this.buttonPlay.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonPlay.Enabled = false;
+            this.buttonPlay.Location = new System.Drawing.Point(34, 407);
+            this.buttonPlay.Name = "buttonPlay";
+            this.buttonPlay.Size = new System.Drawing.Size(317, 25);
+            this.buttonPlay.TabIndex = 5;
+            this.buttonPlay.Text = "Play result";
+            this.buttonPlay.UseVisualStyleBackColor = true;
+            this.buttonPlay.Click += new System.EventHandler(this.buttonPlay_Click);
             // 
             // ConverterForm
             // 
@@ -116,6 +131,7 @@
         private System.Windows.Forms.RichTextBox textBoxOutput;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.PictureBox pictureBox;
+        private System.Windows.Forms.Button buttonPlay;
 
 
     }

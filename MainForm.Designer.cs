@@ -1006,7 +1006,6 @@ namespace WebMConverter
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button buttonBrowseOut;
-        private System.Windows.Forms.TextBox textBoxOut;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonGo;
@@ -1067,6 +1066,7 @@ namespace WebMConverter
         public System.Windows.Forms.TextBox boxCropFrom;
         public System.Windows.Forms.TextBox boxResH;
         public System.Windows.Forms.TextBox boxResW;
+        public System.Windows.Forms.TextBox textBoxOut;
     }
 }
 
