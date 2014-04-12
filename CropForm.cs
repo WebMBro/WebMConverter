@@ -126,6 +126,8 @@ namespace WebMConverter
                                                                                         pictureBoxVideo.BackgroundImage = _image;
                                                                                         File.Delete(_previewFile);
 
+                                                                                        _owner.AssumedInputSize = _image.Size; //We assume the size of the preview will also be the size of the input used for the conversion
+
                                                                                         float aspectRatio = _image.Width / (float)_image.Height;
                                                                                         ClientSize = new Size((int)(ClientSize.Height * aspectRatio), ClientSize.Height);
                                                                                     }

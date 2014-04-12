@@ -18,6 +18,9 @@ namespace WebMConverter
         private string _autoArguments;
         private bool _argumentError;
 
+        public Size AssumedInputSize; //This will get set as soon as the crop form generates an input file. It's assumed because the user could've changed the video after cropping.
+        //Might want to get a definite, reliable way to get the size of the input video.
+
         public static string FFmpeg = Path.Combine(Environment.CurrentDirectory, "ffmpeg/ffmpeg.exe");
 
         public RectangleF CroppingRectangle  //This is in the [0-1] region, multiply it by the resolution to get the crop coordinates in pixels
@@ -50,13 +53,14 @@ namespace WebMConverter
             DragEnter += HandleDragEnter;
             DragDrop += HandleDragDrop;
 
-            _templateArguments = "{0} -c:v libvpx -crf 32 -b:v {1}K {2} -threads {3} {4} {5}";
+            _templateArguments = "{0} -c:v libvpx -crf 32 -b:v {1}K {2} {3} -threads {4} {5} {6}";
             //{0} is -an if no audio, otherwise blank
             //{1} is bitrate in kb/s
             //{2} is -vf scale=WIDTH:HEIGHT if set otherwise blank
-            //{3} is amount of threads to use
-            //{4} is -fs 3M if 3MB limit enabled otherwise blank
-            //{5} is -metadata title="TITLE" when specifying a title, otherwise blank
+            //{3} is -filter:v "crop=out_w:out_h:x:y" if set otherwise blank
+            //{4} is amount of threads to use
+            //{5} is -fs 3M if 3MB limit enabled otherwise blank
+            //{6} is -metadata title="TITLE" when specifying a title, otherwise blank
             _template = "{2} -i \"{0}\" {3} {4} {5} -f webm \"{1}\"";
             //{0} is input file
             //{1} is output file
@@ -286,6 +290,38 @@ namespace WebMConverter
                 (string.IsNullOrWhiteSpace(boxResW.Text) && !string.IsNullOrWhiteSpace(boxResH.Text)))
                 throw new ArgumentException("One of the width/height fields isn't filled in! Either fill none of them, or both of them!");
 
+            string sizeCrop = "";
+            if (_croppingRectangle != CropForm.FullCrop)
+            {
+                //Okay so here's the plan
+                //1. Get the width of the video. If this is -1, you need to get the aspect ratio of the video somehow and then calculate the width from the height
+                //2. Get the height of the video. If this is -1, you need to get the aspect ratio of the video somehowand then calculate the height from the width
+                //If you can't get them, disallow the use of -1 if you're cropping the video at all!
+                //3. If they are both filled in, you're in luck. Now you can calculate the pixel values for all 4 parameters for the crop.
+
+                int assumedWidth = width;
+                int assumedHeight = height;
+                if (width == -1 || height == -1)  //TODO: allow this
+                    throw new ArgumentException("Sorry, but you can't crop while using -1 in one of the resolution fields.");
+                if (width == 0 || height == 0) 
+                {
+                    //The AssumedInputSize is the size of the last preview image generated while using the cropping tool.
+                    //It's a good assumption, unless the user changes the input video after cropping.
+                    assumedWidth = AssumedInputSize.Width;
+                    assumedHeight = AssumedInputSize.Height;
+
+                    if (assumedWidth == 0 || assumedHeight == 0)
+                        throw new ArgumentException("This exception should never, ever, happen.");
+                }
+
+                int cropX = (int)(assumedWidth * _croppingRectangle.X);
+                int cropY = (int)(assumedHeight * _croppingRectangle.Y);
+                int cropW = (int)(assumedWidth * _croppingRectangle.Width);
+                int cropH = (int)(assumedHeight * _croppingRectangle.Height);
+
+                sizeCrop = string.Format("-filter:v crop=\"{0}:{1}:{2}:{3}\"", cropW, cropH, cropX, cropY);
+            }
+
             float startSeconds = ParseTime(boxCropFrom.Text);
 
             float duration = 0;
@@ -334,7 +370,7 @@ namespace WebMConverter
                 metadataTitle = string.Format("-metadata title=\"{0}\"", boxMetadataTitle.Text.Replace("\"", "\\\""));
 
             string audioEnabled = boxAudio.Checked ? "" : "-an"; //-an if no audio
-            return string.Format(_templateArguments, audioEnabled, bitrate, size, threads, limitTo, metadataTitle);
+            return string.Format(_templateArguments, audioEnabled, bitrate, size, sizeCrop, threads, limitTo, metadataTitle);
         }
 
         private static string MakeParseFriendly(string text)
@@ -358,6 +394,7 @@ namespace WebMConverter
         private void buttonOpenCrop_Click(object sender, EventArgs e)
         {
             new CropForm(this).ShowDialog();
+            UpdateArguments(sender, e);
         }
     }
 }
