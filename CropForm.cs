@@ -223,37 +223,48 @@ namespace WebMConverter
                 //Can't use Inflate or Offset here, Inflate changes size from the center and Offset doesn't change size at all!
                 //Anyway here we change the size of the rectangle if the mouse is actually held down
 
+                //Clamp mouse pos to picture box, that way you shouldn't be able to move the cropping rectangle out of bounds
+                Point min = /*pictureBoxVideo.PointToScreen*/(new Point(0, 0));
+                Point max = /*pictureBoxVideo.PointToScreen*/(new Point(pictureBoxVideo.Size));
+                float clampedMouseX = Math.Max(min.X, Math.Min(max.X, e.X));
+                float clampedMouseY = Math.Max(min.Y, Math.Min(max.Y, e.Y));
+
                 float newWidth = 0;
                 float newHeight = 0;
                 switch (_heldCorner)
                 {
                     case Corner.TopLeft:
-                        newWidth = _rectangle.Width - (e.X / (float)pictureBoxVideo.Width - _rectangle.X);
-                        newHeight = _rectangle.Height - (e.Y / (float)pictureBoxVideo.Height - _rectangle.Y);
-                        _rectangle.X = e.X / (float)pictureBoxVideo.Width;
-                        _rectangle.Y = e.Y / (float)pictureBoxVideo.Height;
+                        newWidth = _rectangle.Width - (clampedMouseX / (float)pictureBoxVideo.Width - _rectangle.X);
+                        newHeight = _rectangle.Height - (clampedMouseY / (float)pictureBoxVideo.Height - _rectangle.Y);
+                        _rectangle.X = clampedMouseX / (float)pictureBoxVideo.Width;
+                        _rectangle.Y = clampedMouseY / (float)pictureBoxVideo.Height;
                         break;
 
                     case Corner.TopRight:
-                        newWidth = _rectangle.Width + (e.X / (float)pictureBoxVideo.Width - _rectangle.Right);
-                        newHeight = _rectangle.Height - (e.Y / (float)pictureBoxVideo.Height - _rectangle.Y);
-                        _rectangle.Y = e.Y / (float)pictureBoxVideo.Height;
+                        newWidth = _rectangle.Width + (clampedMouseX / (float)pictureBoxVideo.Width - _rectangle.Right);
+                        newHeight = _rectangle.Height - (clampedMouseY / (float)pictureBoxVideo.Height - _rectangle.Y);
+                        _rectangle.Y = clampedMouseY / (float)pictureBoxVideo.Height;
                         break;
 
                     case Corner.BottomLeft:
-                        newWidth = _rectangle.Width - (e.X / (float)pictureBoxVideo.Width - _rectangle.X);
-                        newHeight = _rectangle.Height + (e.Y / (float)pictureBoxVideo.Height - _rectangle.Bottom);
-                        _rectangle.X = e.X / (float)pictureBoxVideo.Width;
+                        newWidth = _rectangle.Width - (clampedMouseX / (float)pictureBoxVideo.Width - _rectangle.X);
+                        newHeight = _rectangle.Height + (clampedMouseY / (float)pictureBoxVideo.Height - _rectangle.Bottom);
+                        _rectangle.X = clampedMouseX / (float)pictureBoxVideo.Width;
                         break;
 
                     case Corner.BottomRight:
-                        newWidth = _rectangle.Width + (e.X / (float)pictureBoxVideo.Width - _rectangle.Right);
-                        newHeight = _rectangle.Height + (e.Y / (float)pictureBoxVideo.Height - _rectangle.Bottom);
+                        newWidth = _rectangle.Width + (clampedMouseX / (float)pictureBoxVideo.Width - _rectangle.Right);
+                        newHeight = _rectangle.Height + (clampedMouseY / (float)pictureBoxVideo.Height - _rectangle.Bottom);
                         break;
 
                     case Corner.None: //Drag entire rectangle
-                        _rectangle.X = (e.X + _mouseOffset.X) / (float)pictureBoxVideo.Width;
-                        _rectangle.Y = (e.Y + _mouseOffset.Y) / (float)pictureBoxVideo.Height;
+                        //This is a special case, because the mouse needs to be clamped according to rectangle size too!
+                        float actualRectW = _rectangle.Width * pictureBoxVideo.Width;
+                        float actualRectH = _rectangle.Height * pictureBoxVideo.Height;
+                        clampedMouseX = Math.Max(min.X - _mouseOffset.X, Math.Min(max.X - _mouseOffset.X - actualRectW, e.X));
+                        clampedMouseY = Math.Max(min.Y - _mouseOffset.Y, Math.Min(max.Y - _mouseOffset.Y - actualRectH, e.Y));
+                        _rectangle.X = (clampedMouseX + _mouseOffset.X) / (float)pictureBoxVideo.Width;
+                        _rectangle.Y = (clampedMouseY + _mouseOffset.Y) / (float)pictureBoxVideo.Height;
                         break;
                 }
 
@@ -261,6 +272,16 @@ namespace WebMConverter
                     _rectangle.Width = newWidth;
                 if (newHeight != 0)
                     _rectangle.Height = newHeight;
+
+                //Do a out of bounds check
+                //This doesn't work, I have a great idea though: limit the mouse cursor position to the picturebox!
+                /*
+                _rectangle.X = Math.Max(0, _rectangle.X);
+                _rectangle.Y = Math.Max(0, _rectangle.Y);
+                if (_rectangle.Right > 1)
+                    _rectangle.Width = 1 - _rectangle.X;
+                if (_rectangle.Bottom > 1)
+                    _rectangle.Height = 1 - _rectangle.Y;*/
             }
 
             pictureBoxVideo.Invalidate();
@@ -365,11 +386,20 @@ namespace WebMConverter
                 return;
             }
 
-            if (_rectangle.Left < 0 || _rectangle.Top < 0 || _rectangle.Right > 1 || _rectangle.Bottom > 1)
+            float tolerance = 0.1f; //Account for float inprecision
+
+            if (_rectangle.Left < 0 - tolerance || _rectangle.Top < 0 - tolerance || _rectangle.Right > 1 + tolerance || _rectangle.Bottom > 1 + tolerance)
             {
                 MessageBox.Show("Your crop is outside the valid range! Press the reset button and try again.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            _rectangle.X = Math.Max(0, _rectangle.X);
+            _rectangle.Y = Math.Max(0, _rectangle.Y);
+            if (_rectangle.Right > 1)
+                _rectangle.Width = 1 - _rectangle.X;
+            if (_rectangle.Bottom > 1)
+                _rectangle.Height = 1 - _rectangle.Y;
 
             DialogResult = DialogResult.OK;
             _owner.CroppingRectangle = _rectangle;
