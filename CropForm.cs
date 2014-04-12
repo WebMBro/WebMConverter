@@ -165,6 +165,8 @@ namespace WebMConverter
 
             var time = MainForm.ParseTime(_owner.boxCropFrom.Text);
             _message = string.Format("Previewing video at {0}", TimeSpan.FromSeconds(time));
+            if (time == 0.0)
+                _message += "\nTo preview at a different time, input a valid trim start time";
             //We can actually allow invalid times here: we just use the preview from the very start of the video (0.0)
 
             return string.Format(template, input, "-ss " + time, _previewFile);
