@@ -311,7 +311,7 @@ namespace WebMConverter
                     assumedHeight = AssumedInputSize.Height;
 
                     if (assumedWidth == 0 || assumedHeight == 0)
-                        throw new ArgumentException("This exception should never, ever, happen.");
+                        throw new ArgumentException("For some reason you've cropped without generating a preview image.");
                 }
 
                 int cropX = (int)(assumedWidth * _croppingRectangle.X);
