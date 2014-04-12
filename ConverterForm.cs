@@ -53,12 +53,10 @@ namespace WebMConverter
             else
                 textBoxOutput.AppendText("\nArguments: " + argument);
 
-            string ffmpeg = Path.Combine(Environment.CurrentDirectory, "ffmpeg/ffmpeg.exe");
-
             if (_multipass)
-                MultiPass(_arguments, ffmpeg);
+                MultiPass(_arguments, MainForm.FFmpeg);
             else
-                SinglePass(argument, ffmpeg);
+                SinglePass(argument, MainForm.FFmpeg);
         }
 
         private void SinglePass(string argument, string ffmpeg)
