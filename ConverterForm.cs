@@ -95,8 +95,6 @@ namespace WebMConverter
             _process.Start();
             _process.BeginErrorReadLine();
             _process.BeginOutputReadLine();
-
-            _process.StandardInput.Write("y\n"); //Confirm overwrite
         }
 
         private void MultiPass(string[] arguments, string ffmpeg)
@@ -145,8 +143,6 @@ namespace WebMConverter
             _process.Start();
             _process.BeginErrorReadLine();
             _process.BeginOutputReadLine();
-
-            _process.StandardInput.Write("y\n"); //Confirm overwrite
         }
 
         private void Exited(object sender, EventArgs eventArgs)
