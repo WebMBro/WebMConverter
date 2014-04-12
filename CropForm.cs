@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace WebMConverter
@@ -16,13 +19,24 @@ namespace WebMConverter
         private Corner _heldCorner = Corner.None;
         private bool _held;
 
-        private RectangleF _rectangle; //Rectangle is in [0-1, 0-1] format, this should make scaling easier
         private bool _insideForm; //Is the cursor inside the picturebox?
         private bool _insideRectangle; //Is the cursor inside the cropping rectangle?
         private Point _mousePos;
         private Point _mouseOffset; //This is in pixels, not a float
 
-        private const int MaxDistance = 6;
+        public static readonly RectangleF FullCrop = new RectangleF(0, 0, 1, 1);
+        private RectangleF _rectangle; //Rectangle is in [0-1, 0-1] format, this should make scaling easier
+
+        private const int MaxDistance = 6; //Max distance to mouse from corner dots
+        private Font _font = new Font(FontFamily.GenericSansSerif, 11f);
+
+        private Process _process;
+        private MainForm _owner;
+
+        private string _previewFile = Path.Combine(Environment.CurrentDirectory, "tempPreview.png");
+        private bool _generating;
+        private string _message;
+        private Image _image;
 
         private enum Corner
         {
@@ -35,21 +49,123 @@ namespace WebMConverter
 
         public CropForm(MainForm mainForm)
         {
+            _owner = mainForm;
+            _rectangle = new RectangleF(0.25f, 0.25f, 0.5f, 0.5f); //Make sure the user knows where the dots are
+
             InitializeComponent();
 
-            _rectangle = new RectangleF(0.25f, 0.25f, 0.5f, 0.5f);
+            if (mainForm.CroppingRectangle != FullCrop)
+                _rectangle = mainForm.CroppingRectangle;
+
+            GeneratePreview();
 
             //Stub for video crop form
             //Template:
-                //-filter:v "crop=out_w:out_h:x:y"
+            //-filter:v "crop=out_w:out_h:x:y"
 
             //TODO: use this form to determine a cropping area for the video
-            //TODO: run ffmpeg here to get a picture of the first frame of the video, this way you can indirectly determine the size
-                //Don't freeze up the interface while waiting for the preview, okay?
-                //Also, important, scale the preview to the size options the user entered in width x height. Take note of the -1 thing too!
-                //I think ffmpeg first scales it down, then crops it.
-            //TODO: when pressing Confirm, put the values in a new text box that'll be added to the video options
+            //Also, important, scale the preview to the size options the user entered in width x height. Take note of the -1 thing too!
+            //I think ffmpeg first scales it down, then crops it.
+            //TODO: when pressing Confirm, put the values in a new label that'll be added to the video options
             //TODO: maybe convert the float values from the rect to out_w/out_h/x/y yourself
+        }
+
+        private void GeneratePreview()
+        {
+            string argument = ConstructArguments();
+
+            if (string.IsNullOrWhiteSpace(argument))
+            {
+                return;
+            }
+
+            _generating = true;
+
+            _process = new Process();
+
+            ProcessStartInfo info = new ProcessStartInfo(MainForm.FFmpeg);
+            info.RedirectStandardInput = true;
+            info.RedirectStandardOutput = true;
+            info.RedirectStandardError = true;
+            info.UseShellExecute = false; //Required to redirect IO streams
+            info.CreateNoWindow = true; //Hide console
+            info.Arguments = argument;
+
+            _process.StartInfo = info;
+            _process.EnableRaisingEvents = true; //!!!!
+
+            _process.ErrorDataReceived += (sender, args) => Console.WriteLine(args.Data);
+            _process.OutputDataReceived += (sender, args) => Console.WriteLine(args.Data);
+
+            _process.Exited += (o, args) => pictureBoxVideo.Invoke((Action)(() =>
+                                                                                {
+                                                                                    _generating = false;
+
+                                                                                    if (_process.ExitCode != 0)
+                                                                                    {
+                                                                                        _message = string.Format("ffmpeg.exe exited with exit code {0}. That's usually bad.", _process.ExitCode);
+                                                                                        return;
+                                                                                    }
+
+                                                                                    if (!File.Exists(_previewFile))
+                                                                                    {
+                                                                                        _message = "The preview file wasn't generated, that means ffmpeg.exe failed. Confirm the following:\n- Is the input time actually smaller than the length than the input video?";
+                                                                                        return;
+                                                                                    }
+
+                                                                                    try
+                                                                                    {
+
+                                                                                        //_image = Image.FromFile(_previewFile); //Thank you for not releasing the lock on the file afterwards, Microsoft
+
+                                                                                        using (FileStream stream = new FileStream(_previewFile, FileMode.Open, FileAccess.Read))
+                                                                                        {
+                                                                                            _image = Image.FromStream(stream);
+                                                                                        }
+
+                                                                                        pictureBoxVideo.BackgroundImage = _image;
+                                                                                        File.Delete(_previewFile);
+
+                                                                                        float aspectRatio = _image.Width / (float)_image.Height;
+                                                                                        ClientSize = new Size((int)(ClientSize.Height * aspectRatio), ClientSize.Height);
+                                                                                    }
+                                                                                    catch (Exception e)
+                                                                                    {
+                                                                                        _message = e.ToString();
+                                                                                    }
+                                                                                }));
+
+            _process.Start();
+            _process.BeginErrorReadLine();
+            _process.BeginOutputReadLine();
+
+            _process.StandardInput.Write("y\n"); //Confirm overwrite
+        }
+
+        private string ConstructArguments()
+        {
+            string template = "{1} -i \"{0}\" -f image2 -vframes 1 \"{2}\"";
+            //{0} is input video
+            //{1} is -ss TIME or blank (inaccurate but fast because it's before -i)
+            //{2} is output image
+
+            string input = _owner.textBoxIn.Text;
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                _message = "No input file!";
+                return null;
+            }
+            if (!File.Exists(input))
+            {
+                _message = "Input file doesn't exist";
+                return null;
+            }
+
+            var time = MainForm.ParseTime(_owner.boxCropFrom.Text);
+            _message = string.Format("Previewing video at {0}", TimeSpan.FromSeconds(time));
+            //We can actually allow invalid times here: we just use the preview from the very start of the video (0.0)
+
+            return string.Format(template, input, "-ss " + time, _previewFile);
         }
 
         private void pictureBoxVideo_MouseDown(object sender, MouseEventArgs e)
@@ -148,24 +264,17 @@ namespace WebMConverter
             pictureBoxVideo.Invalidate();
         }
 
-        Font f = new Font(FontFamily.GenericSansSerif, 11f);
-
         private void pictureBoxVideo_Paint(object sender, PaintEventArgs e)
         {
             var g = e.Graphics;
 
-            g.SmoothingMode = SmoothingMode.HighQuality;
-
-            for (int i = 0; i < 2; i++)
-            {
-                g.DrawString("Generating preview...", f, new SolidBrush(Color.FromArgb(i * 255, i * 255, i * 255)), 5, 5 - i);
-            }
-
-            return; //Todo: actually do something here
+            //g.SmoothingMode = SmoothingMode.HighQuality;
+            //TODO: this is really slow for some reason. Investigate using profiling or something.
 
             var edgePen = new Pen(Color.White, 1f);
             var dotBrush = new SolidBrush(Color.White);
-            var outsideBrush = new SolidBrush(Color.FromArgb(100, 0, 0, 0));
+            var outsideBrush = new HatchBrush(HatchStyle.Percent50, Color.Transparent);
+            //var outsideBrush = new SolidBrush(Color.FromArgb(100, 0, 0, 0));
 
             var maxW = pictureBoxVideo.Width;
             var maxH = pictureBoxVideo.Height;
@@ -197,6 +306,7 @@ namespace WebMConverter
                 if (closest.Value < MaxDistance * MaxDistance)  //Comparing squared distance to avoid worthless square roots
                 {
                     Cursor = Cursors.Hand;
+                    //Draw outlines on the dots to indicate they can be selected and moved
                     if (closest.Key == Corner.TopLeft) g.DrawEllipse(edgePen, x - diameterEdge / 2, y - diameterEdge / 2, diameterEdge, diameterEdge);
                     if (closest.Key == Corner.TopRight) g.DrawEllipse(edgePen, x + w - diameterEdge / 2, y - diameterEdge / 2, diameterEdge, diameterEdge);
                     if (closest.Key == Corner.BottomLeft) g.DrawEllipse(edgePen, x - diameterEdge / 2, y + h - diameterEdge / 2, diameterEdge, diameterEdge);
@@ -204,11 +314,22 @@ namespace WebMConverter
                 }
                 else if (_insideRectangle)
                     Cursor = Cursors.SizeAll;
-                else if (Cursor != Cursors.Default)
+                else if (Cursor != Cursors.Default) //Reduntant???
                     Cursor = Cursors.Default;
             }
 
+            //Draw a shadow below the text so it's still readable on a white/black background
 
+            if (_generating)
+            {
+                for (int i = 0; i < 2; i++)
+                    g.DrawString("Generating preview...", _font, new SolidBrush(Color.FromArgb(i * 255, i * 255, i * 255)), 5, 5 - i);
+            }
+            else if (!string.IsNullOrWhiteSpace(_message))
+            {
+                for (int i = 0; i < 2; i++)
+                    g.DrawString(_message, _font, new SolidBrush(Color.FromArgb(i * 255, i * 255, i * 255)), 5, 5 - i);
+            }
         }
 
         private void pictureBoxVideo_MouseEnter(object sender, EventArgs e)
@@ -221,6 +342,37 @@ namespace WebMConverter
         {
             _insideForm = false;
             pictureBoxVideo.Invalidate();
+        }
+
+        private void pictureBoxVideo_Resize(object sender, EventArgs e)
+        {
+            pictureBoxVideo.Invalidate();
+        }
+
+        private void buttonReset_Click(object sender, EventArgs e)
+        {
+            _rectangle = FullCrop;
+            pictureBoxVideo.Invalidate();
+        }
+
+        private void buttonConfirm_Click(object sender, EventArgs e)
+        {
+            if (_rectangle.Left >= _rectangle.Right || _rectangle.Top >= _rectangle.Bottom)
+            {
+                MessageBox.Show("You messed up your crop! Press the reset button and try again.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (_rectangle.Left < 0 || _rectangle.Top < 0 || _rectangle.Right > 1 || _rectangle.Bottom > 1)
+            {
+                MessageBox.Show("Your crop is outside the valid range! Press the reset button and try again.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            DialogResult = DialogResult.OK;
+            _owner.CroppingRectangle = _rectangle;
+
+            Close();
         }
     }
 }

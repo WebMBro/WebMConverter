@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -11,14 +12,39 @@ namespace WebMConverter
     {
         private string _template;
         private string _templateArguments;
+
         private string _autoOutput;
         private string _autoTitle;
         private string _autoArguments;
         private bool _argumentError;
 
+        public static string FFmpeg = Path.Combine(Environment.CurrentDirectory, "ffmpeg/ffmpeg.exe");
+
+        public RectangleF CroppingRectangle  //This is in the [0-1] region, multiply it by the resolution to get the crop coordinates in pixels
+        {
+            get { return _croppingRectangle; }
+            set
+            {
+                _croppingRectangle = value;
+                if (_croppingRectangle == CropForm.FullCrop)
+                    labelCrop.Text = "Don't crop";
+                else
+                    labelCrop.Text = string.Format(CultureInfo.InvariantCulture, "X:{0:0%} Y:{1:0%} W:{2:0%} H:{3:0%}",
+                                                   _croppingRectangle.X,
+                                                   _croppingRectangle.Y,
+                                                   _croppingRectangle.Width,
+                                                   _croppingRectangle.Height);
+            }
+        }
+        private RectangleF _croppingRectangle; //Using a backing field so we can update the label as soon as something changed it!
+
+        //public RectangleF CroppingRectangle; //This is in the [0-1] region, multiply it by the resolution to get the crop coordinates in pixels
+
         public MainForm()
         {
             InitializeComponent();
+
+            CroppingRectangle = new RectangleF(0, 0, 1, 1); //Crop nothing by default
 
             AllowDrop = true;
             DragEnter += HandleDragEnter;
@@ -109,7 +135,7 @@ namespace WebMConverter
         }
 
         char[] invalidChars = Path.GetInvalidPathChars();
-        
+
         private string Convert()
         {
             string input = textBoxIn.Text;
@@ -198,7 +224,7 @@ namespace WebMConverter
             return null;
         }
 
-        private float ParseTime(string text)
+        public static float ParseTime(string text)
         {
             //Try fo figure out if begin/end are correct
             //1. if it contains a :, it's probably a time, try to convert using DateTime.Parse
@@ -311,7 +337,7 @@ namespace WebMConverter
             return string.Format(_templateArguments, audioEnabled, bitrate, size, threads, limitTo, metadataTitle);
         }
 
-        private string MakeParseFriendly(string text)
+        private static string MakeParseFriendly(string text)
         {
             //This method adds "00:" in front of text, if the text format is in either 00:00 or 00:00.00 format.
             //This pattern should work.
@@ -329,9 +355,9 @@ namespace WebMConverter
             UpdateArguments(sender, e);
         }
 
-        private void label18_Click(object sender, EventArgs e)
+        private void buttonOpenCrop_Click(object sender, EventArgs e)
         {
-
+            new CropForm(this).ShowDialog();
         }
     }
 }
