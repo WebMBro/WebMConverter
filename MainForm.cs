@@ -61,7 +61,7 @@ namespace WebMConverter
             //{4} is amount of threads to use
             //{5} is -fs 3M if 3MB limit enabled otherwise blank
             //{6} is -metadata title="TITLE" when specifying a title, otherwise blank
-            _template = "{2} -i \"{0}\" {3} {4} {5} -f webm \"{1}\"";
+            _template = "{2} -i \"{0}\" {3} {4} {5} -f webm -y \"{1}\"";
             //{0} is input file
             //{1} is output file
             //{2} is TIME if seek enabled otherwise blank
