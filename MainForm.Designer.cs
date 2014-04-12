@@ -446,8 +446,8 @@ namespace WebMConverter
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(751, 31);
             this.label24.TabIndex = 13;
-            this.label24.Text = "IMPORTANT: NOT IMPLEMENTED YET\r\nCrop a region out of the video. Click the Crop..." +
-    " button to select the region to be cropped. Useful for reaction videos.";
+            this.label24.Text = "Crop a region out of the video. Click the Crop... button to select the region to " +
+    "be cropped. Useful for reaction videos.";
             this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label22
