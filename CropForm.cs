@@ -56,18 +56,11 @@ namespace WebMConverter
 
             if (mainForm.CroppingRectangle != FullCrop)
                 _rectangle = mainForm.CroppingRectangle;
+        }
 
-            GeneratePreview();
-
-            //Stub for video crop form
-            //Template:
-            //-filter:v "crop=out_w:out_h:x:y"
-
-            //TODO: use this form to determine a cropping area for the video
-            //Also, important, scale the preview to the size options the user entered in width x height. Take note of the -1 thing too!
-            //I think ffmpeg first scales it down, then crops it.
-            //TODO: when pressing Confirm, put the values in a new label that'll be added to the video options
-            //TODO: maybe convert the float values from the rect to out_w/out_h/x/y yourself
+        private void CropForm_Load(object sender, EventArgs e)
+        {
+            GeneratePreview(); //Make sure everything is loaded before doing this?
         }
 
         private void GeneratePreview()
@@ -75,12 +68,9 @@ namespace WebMConverter
             string argument = ConstructArguments();
 
             if (string.IsNullOrWhiteSpace(argument))
-            {
                 return;
-            }
 
             _generating = true;
-
             _process = new Process();
 
             ProcessStartInfo info = new ProcessStartInfo(MainForm.FFmpeg);
@@ -167,7 +157,7 @@ namespace WebMConverter
             _message = string.Format("Previewing video at {0}", TimeSpan.FromSeconds(time));
             if (time == 0.0)
                 _message += "\nTo preview at a different time, input a valid trim start time";
-            //We can actually allow invalid times here: we just use the preview from the very start of the video (0.0)
+            //We can actually allow invalid times here: we just use the preview from the very start of the video (0.0) in that case
 
             return string.Format(template, input, "-ss " + time, _previewFile);
         }
@@ -222,12 +212,11 @@ namespace WebMConverter
 
             if (_held)
             {
-                //Can't use Inflate or Offset here, Inflate changes size from the center and Offset doesn't change size at all!
-                //Anyway here we change the size of the rectangle if the mouse is actually held down
+                //Here we change the size of the rectangle if the mouse is actually held down
 
                 //Clamp mouse pos to picture box, that way you shouldn't be able to move the cropping rectangle out of bounds
-                Point min = /*pictureBoxVideo.PointToScreen*/(new Point(0, 0));
-                Point max = /*pictureBoxVideo.PointToScreen*/(new Point(pictureBoxVideo.Size));
+                Point min = new Point(0, 0);
+                Point max = new Point(pictureBoxVideo.Size);
                 float clampedMouseX = Math.Max(min.X, Math.Min(max.X, e.X));
                 float clampedMouseY = Math.Max(min.Y, Math.Min(max.Y, e.Y));
 
@@ -274,16 +263,6 @@ namespace WebMConverter
                     _rectangle.Width = newWidth;
                 if (newHeight != 0)
                     _rectangle.Height = newHeight;
-
-                //Do a out of bounds check
-                //This doesn't work, I have a great idea though: limit the mouse cursor position to the picturebox!
-                /*
-                _rectangle.X = Math.Max(0, _rectangle.X);
-                _rectangle.Y = Math.Max(0, _rectangle.Y);
-                if (_rectangle.Right > 1)
-                    _rectangle.Width = 1 - _rectangle.X;
-                if (_rectangle.Bottom > 1)
-                    _rectangle.Height = 1 - _rectangle.Y;*/
             }
 
             pictureBoxVideo.Invalidate();
@@ -299,7 +278,6 @@ namespace WebMConverter
             var edgePen = new Pen(Color.White, 1f);
             var dotBrush = new SolidBrush(Color.White);
             var outsideBrush = new HatchBrush(HatchStyle.Percent50, Color.Transparent);
-            //var outsideBrush = new SolidBrush(Color.FromArgb(100, 0, 0, 0));
 
             var maxW = pictureBoxVideo.Width;
             var maxH = pictureBoxVideo.Height;
