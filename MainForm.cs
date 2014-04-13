@@ -51,21 +51,25 @@ namespace WebMConverter
             DragEnter += HandleDragEnter;
             DragDrop += HandleDragDrop;
 
-            _templateArguments = "{0} -c:v libvpx -crf 32 -b:v {1}K {2} {3} -threads {4} {5} {6}";
-            //{0} is -an if no audio, otherwise blank
+            _templateArguments = "{0} -c:v libvpx -crf 32 -b:v {1}K {2} {3} -threads {4} {5} {6} {7}";
+            //{0} is '-an' if no audio, otherwise blank
             //{1} is bitrate in kb/s
-            //{2} is -vf scale=WIDTH:HEIGHT if set otherwise blank
-            //{3} is -filter:v "crop=out_w:out_h:x:y" if set otherwise blank
+            //{2} is '-vf scale=WIDTH:HEIGHT' if set otherwise blank
+            //{3} is '-filter:v "crop=out_w:out_h:x:y"' if set otherwise blank
             //{4} is amount of threads to use
-            //{5} is -fs 3M if 3MB limit enabled otherwise blank
-            //{6} is -metadata title="TITLE" when specifying a title, otherwise blank
-            _template = "{2} -i \"{0}\" {3} {4} {5} -f webm -y \"{1}\"";
+            //{5} is '-fs XM' if X MB limit enabled otherwise blank
+            //{6} is '-metadata title="TITLE"' when specifying a title, otherwise blank
+            //{7} is '-quality best -lag-in-frames 16' when using HQ mode, otherwise blank
+
+            _template = "{2} -i \"{0}\" {3} {4} {5} {6} -f webm -y \"{1}\"";
             //{0} is input file
             //{1} is output file
             //{2} is TIME if seek enabled otherwise blank
             //{3} is TIME if to enabled otherwise blank
             //{4} is extra arguments
-            //{5} is pass number if 2-pass enabled otherwise blank
+            //{5} is '-pass X' if 2-pass enabled, otherwise blank
+            //{6} is '-auto-alt-ref 1' is 2-pass enabled AND HQ mode enabled, otherwise blank
+
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -210,14 +214,18 @@ namespace WebMConverter
 
             string[] arguments;
             if (!checkBox2Pass.Checked)
-                arguments = new[] { string.Format(_template, input, output, start, end, options, "") };
+                arguments = new[] { string.Format(_template, input, output, start, end, options, "", "") };
             else
             {
                 int passes = 2; //Can you even use more than 2 passes?
 
+                string HQ = "";
+                if (boxHQ.Checked)
+                    HQ = "-auto-alt-ref 1"; //This should improve quality, only in 2-pass mode
+
                 arguments = new string[passes];
                 for (int i = 0; i < passes; i++)
-                    arguments[i] = string.Format(_template, input, output, start, end, options, "-pass " + (i + 1));
+                    arguments[i] = string.Format(_template, input, output, start, end, options, "-pass " + (i + 1), HQ);
             }
 
             var form = new ConverterForm(this, arguments);
@@ -367,8 +375,12 @@ namespace WebMConverter
             if (!string.IsNullOrWhiteSpace(boxMetadataTitle.Text))
                 metadataTitle = string.Format("-metadata title=\"{0}\"", boxMetadataTitle.Text.Replace("\"", "\\\""));
 
+            string HQ = "";
+            if (boxHQ.Checked)
+                HQ = "-quality best -lag-in-frames 16";
+
             string audioEnabled = boxAudio.Checked ? "" : "-an"; //-an if no audio
-            return string.Format(_templateArguments, audioEnabled, bitrate, size, sizeCrop, threads, limitTo, metadataTitle);
+            return string.Format(_templateArguments, audioEnabled, bitrate, size, sizeCrop, threads, limitTo, metadataTitle, HQ);
         }
 
         private static string MakeParseFriendly(string text)
