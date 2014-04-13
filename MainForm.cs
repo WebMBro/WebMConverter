@@ -21,8 +21,6 @@ namespace WebMConverter
         public Size AssumedInputSize; //This will get set as soon as the crop form generates an input file. It's assumed because the user could've changed the video after cropping.
         //Might want to get a definite, reliable way to get the size of the input video.
 
-        public static string FFmpeg = Path.Combine(Environment.CurrentDirectory, "ffmpeg/ffmpeg.exe");
-
         public RectangleF CroppingRectangle  //This is in the [0-1] region, multiply it by the resolution to get the crop coordinates in pixels
         {
             get { return _croppingRectangle; }
