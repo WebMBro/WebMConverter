@@ -297,7 +297,7 @@ namespace WebMConverter
             // 
             this.tableLayoutPanel13.ColumnCount = 3;
             this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 76F));
-            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 157F));
+            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 201F));
             this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel13.Controls.Add(this.label23, 2, 0);
             this.tableLayoutPanel13.Controls.Add(this.boxAudio, 0, 0);
@@ -313,9 +313,9 @@ namespace WebMConverter
             // 
             this.label23.AutoSize = true;
             this.label23.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label23.Location = new System.Drawing.Point(236, 0);
+            this.label23.Location = new System.Drawing.Point(280, 0);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(796, 27);
+            this.label23.Size = new System.Drawing.Size(752, 27);
             this.label23.TabIndex = 2;
             this.label23.Text = "Keep this disabled until Moot allows audio.";
             this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -328,7 +328,7 @@ namespace WebMConverter
             this.boxAudio.Dock = System.Windows.Forms.DockStyle.Fill;
             this.boxAudio.Location = new System.Drawing.Point(3, 3);
             this.boxAudio.Name = "boxAudio";
-            this.boxAudio.Size = new System.Drawing.Size(227, 21);
+            this.boxAudio.Size = new System.Drawing.Size(271, 21);
             this.boxAudio.TabIndex = 3;
             this.boxAudio.Text = "Enable audio:";
             this.boxAudio.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
