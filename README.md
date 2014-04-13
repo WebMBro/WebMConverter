@@ -11,7 +11,7 @@ Also, don't click "Download ZIP" on the right side of the page, that'll only dow
 Important to know:
 * Requires .NET Framework 4.0 (Windows 7 comes with 3.5, so you might want to update)
 * Already includes a copy of ffmpeg.exe
-* Only works on Windows (I assume Linux users don't need GUIs)
+* Only works on Windows (I assume Linux users don't need GUIs, _however_ it appears Mono runs it almost perfectly)
 
 Screenshot:
 
