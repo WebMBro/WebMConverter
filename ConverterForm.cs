@@ -9,7 +9,9 @@ namespace WebMConverter
     public partial class ConverterForm : Form
     {
         private string[] _arguments;
-        private Process _process;
+        //private Process _process;
+        private FFmpeg _ffmpegProcess;
+
         private Timer _timer;
         private bool _ended;
         private bool _panic;
@@ -57,30 +59,18 @@ namespace WebMConverter
                 textBoxOutput.AppendText("\nArguments: " + argument);
 
             if (_multipass)
-                MultiPass(_arguments, MainForm.FFmpeg);
+                MultiPass(_arguments);
             else
-                SinglePass(argument, MainForm.FFmpeg);
+                SinglePass(argument);
         }
 
-        private void SinglePass(string argument, string ffmpeg)
+        private void SinglePass(string argument)
         {
-            _process = new Process();
+            _ffmpegProcess = new FFmpeg(argument);
 
-            ProcessStartInfo info = new ProcessStartInfo(ffmpeg);
-            info.RedirectStandardInput = true;
-            info.RedirectStandardOutput = true;
-            info.RedirectStandardError = true;
-            info.UseShellExecute = false; //Required to redirect IO streams
-            info.CreateNoWindow = true; //Hide console
-            info.Arguments = argument;
-
-            _process.StartInfo = info;
-            _process.EnableRaisingEvents = true; //!!!!
-
-            _process.ErrorDataReceived += ProcessOnErrorDataReceived;
-            _process.OutputDataReceived += ProcessOnOutputDataReceived;
-
-            _process.Exited += (o, args) => textBoxOutput.Invoke((Action)(() =>
+            _ffmpegProcess.Process.ErrorDataReceived += ProcessOnErrorDataReceived;
+            _ffmpegProcess.Process.OutputDataReceived += ProcessOnOutputDataReceived;
+            _ffmpegProcess.Process.Exited += (o, args) => textBoxOutput.Invoke((Action)(() =>
                                                                               {
                                                                                   if (_panic) return; //This should stop that one exception when closing the converter
                                                                                   textBoxOutput.AppendText("\n--- FFMPEG HAS EXITED ---");
@@ -92,33 +82,18 @@ namespace WebMConverter
                                                                                   _timer.Start();
                                                                               }));
 
-            _process.Start();
-            _process.BeginErrorReadLine();
-            _process.BeginOutputReadLine();
+            _ffmpegProcess.Start();
         }
 
-        private void MultiPass(string[] arguments, string ffmpeg)
+        private void MultiPass(string[] arguments)
         {
             int passes = arguments.Length;
 
-            //What a shame, so much copy paste going on here.
-            _process = new Process();
+            _ffmpegProcess = new FFmpeg(arguments[currentPass]);
 
-            ProcessStartInfo info = new ProcessStartInfo(ffmpeg);
-            info.RedirectStandardInput = true;
-            info.RedirectStandardOutput = true;
-            info.RedirectStandardError = true;
-            info.UseShellExecute = false; //Required to redirect IO streams
-            info.CreateNoWindow = true; //Hide console
-            info.Arguments = arguments[currentPass];
-
-            _process.StartInfo = info; 
-            _process.EnableRaisingEvents = true; //!!!!
-
-            _process.ErrorDataReceived += ProcessOnErrorDataReceived;
-            _process.OutputDataReceived += ProcessOnOutputDataReceived;
-
-            _process.Exited += (o, args) => textBoxOutput.Invoke((Action)(() =>
+            _ffmpegProcess.Process.ErrorDataReceived += ProcessOnErrorDataReceived;
+            _ffmpegProcess.Process.OutputDataReceived += ProcessOnOutputDataReceived;
+            _ffmpegProcess.Process.Exited += (o, args) => textBoxOutput.Invoke((Action)(() =>
             {
                 if (_panic) return; //This should stop that one exception when closing the converter
                 textBoxOutput.AppendText("\n--- FFMPEG HAS EXITED ---");
@@ -128,7 +103,7 @@ namespace WebMConverter
                 {
                     textBoxOutput.AppendText(string.Format("\n--- ENTERING PASS {0} ---", currentPass + 1));
 
-                    MultiPass(arguments, ffmpeg); //Sort of recursion going on here, be careful with stack overflows and shit
+                    MultiPass(arguments); //Sort of recursion going on here, be careful with stack overflows and shit
                     return;
                 }
 
@@ -140,24 +115,24 @@ namespace WebMConverter
                 _timer.Start();
             }));
 
-            _process.Start();
-            _process.BeginErrorReadLine();
-            _process.BeginOutputReadLine();
+            _ffmpegProcess.Start();
         }
 
         private void Exited(object sender, EventArgs eventArgs)
         {
             _timer.Stop();
 
-            if (_process.ExitCode != 0)
+            var process = _ffmpegProcess.Process;
+
+            if (process.ExitCode != 0)
             {
                 if (_cancelMultipass)
                     textBoxOutput.AppendText("\n\nConversion cancelled.");
                 else
-                    textBoxOutput.AppendText(string.Format("\n\nffmpeg.exe exited with exit code {0}. That's usually bad.", _process.ExitCode));
+                    textBoxOutput.AppendText(string.Format("\n\nffmpeg.exe exited with exit code {0}. That's usually bad.", process.ExitCode));
                 pictureBox.BackgroundImage = Properties.Resources.cross;
 
-                if (_process.ExitCode == -1073741819) //This error keeps happening for me if I set threads to anything above 1, might happen for other people too
+                if (process.ExitCode == -1073741819) //This error keeps happening for me if I set threads to anything above 1, might happen for other people too
                     MessageBox.Show("It appears ffmpeg.exe crashed because of a thread error. Set the amount of threads to 1 in the advanced tab and try again.", "FYI", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
@@ -179,8 +154,8 @@ namespace WebMConverter
 
             if (!_ended || _panic) //Prevent stack overflow
             {
-                if (!_process.HasExited)
-                    _process.Kill();
+                if (!_ffmpegProcess.Process.HasExited)
+                    _ffmpegProcess.Process.Kill();
             }
             else
                 Close();
@@ -194,7 +169,7 @@ namespace WebMConverter
 
         private void ConverterForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            _process.Dispose();
+            _ffmpegProcess.Process.Dispose();
         }
 
         private void buttonPlay_Click(object sender, EventArgs e)

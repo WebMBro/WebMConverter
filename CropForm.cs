@@ -30,7 +30,8 @@ namespace WebMConverter
         private const int MaxDistance = 6; //Max distance to mouse from corner dots
         private Font _font = new Font(FontFamily.GenericSansSerif, 11f);
 
-        private Process _process;
+        private FFmpeg _ffmpegProcess;
+        //private Process _process;
         private MainForm _owner;
 
         private string _previewFile = Path.Combine(Environment.CurrentDirectory, "tempPreview.png");
@@ -71,29 +72,20 @@ namespace WebMConverter
                 return;
 
             _generating = true;
-            _process = new Process();
+            _ffmpegProcess = new FFmpeg(argument);
 
-            ProcessStartInfo info = new ProcessStartInfo(MainForm.FFmpeg);
-            info.RedirectStandardInput = true;
-            info.RedirectStandardOutput = true;
-            info.RedirectStandardError = true;
-            info.UseShellExecute = false; //Required to redirect IO streams
-            info.CreateNoWindow = true; //Hide console
-            info.Arguments = argument;
+            _ffmpegProcess.Process.ErrorDataReceived += (sender, args) => Console.WriteLine(args.Data);
+            _ffmpegProcess.Process.OutputDataReceived += (sender, args) => Console.WriteLine(args.Data);
 
-            _process.StartInfo = info;
-            _process.EnableRaisingEvents = true; //!!!!
-
-            _process.ErrorDataReceived += (sender, args) => Console.WriteLine(args.Data);
-            _process.OutputDataReceived += (sender, args) => Console.WriteLine(args.Data);
-
-            _process.Exited += (o, args) => pictureBoxVideo.Invoke((Action)(() =>
+            _ffmpegProcess.Process.Exited += (o, args) => pictureBoxVideo.Invoke((Action)(() =>
                                                                                 {
                                                                                     _generating = false;
 
-                                                                                    if (_process.ExitCode != 0)
+                                                                                    int exitCode = _ffmpegProcess.Process.ExitCode;
+
+                                                                                    if (exitCode != 0)
                                                                                     {
-                                                                                        _message = string.Format("ffmpeg.exe exited with exit code {0}. That's usually bad.", _process.ExitCode);
+                                                                                        _message = string.Format("ffmpeg.exe exited with exit code {0}. That's usually bad.", exitCode);
                                                                                         return;
                                                                                     }
 
@@ -105,13 +97,10 @@ namespace WebMConverter
 
                                                                                     try
                                                                                     {
-
                                                                                         //_image = Image.FromFile(_previewFile); //Thank you for not releasing the lock on the file afterwards, Microsoft
 
                                                                                         using (FileStream stream = new FileStream(_previewFile, FileMode.Open, FileAccess.Read))
-                                                                                        {
                                                                                             _image = Image.FromStream(stream);
-                                                                                        }
 
                                                                                         pictureBoxVideo.BackgroundImage = _image;
                                                                                         File.Delete(_previewFile);
@@ -127,16 +116,12 @@ namespace WebMConverter
                                                                                     }
                                                                                 }));
 
-            _process.Start();
-            _process.BeginErrorReadLine();
-            _process.BeginOutputReadLine();
-
-            _process.StandardInput.Write("y\n"); //Confirm overwrite
+            _ffmpegProcess.Process.Start();
         }
 
         private string ConstructArguments()
         {
-            string template = "{1} -i \"{0}\" -f image2 -vframes 1 \"{2}\"";
+            string template = "{1} -i \"{0}\" -f image2 -vframes 1 -y \"{2}\"";
             //{0} is input video
             //{1} is -ss TIME or blank (inaccurate but fast because it's before -i)
             //{2} is output image
@@ -153,9 +138,19 @@ namespace WebMConverter
                 return null;
             }
 
-            var time = MainForm.ParseTime(_owner.boxCropFrom.Text);
+            float time = 0.0f;
+            try
+            {
+                time = MainForm.ParseTime(_owner.boxCropFrom.Text);
+            }
+            catch (Exception)
+            {
+                //ParseTime will throw if the time is invalid, in this case we just set the time to zero if that happens
+            }
+
+
             _message = string.Format("Previewing video at {0}", TimeSpan.FromSeconds(time));
-            if (time == 0.0)
+            if (time == 0.0f)
                 _message += "\nTo preview at a different time, input a valid trim start time";
             //We can actually allow invalid times here: we just use the preview from the very start of the video (0.0) in that case
 
