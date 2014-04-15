@@ -61,6 +61,8 @@ namespace WebMConverter
             //{6} is '-metadata title="TITLE"' when specifying a title, otherwise blank
             //{7} is '-quality best -lag-in-frames 16' when using HQ mode, otherwise blank
 
+            //TODO: add an option for subtitles. It's either '-vf "ass=subtitle.ass"' or '-vf subtitles=subtitle.srt'
+
             _template = "{2} -i \"{0}\" {3} {4} {5} {6} -f webm -y \"{1}\"";
             //{0} is input file
             //{1} is output file

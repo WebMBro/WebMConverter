@@ -129,7 +129,10 @@ namespace WebMConverter
                 if (_cancelMultipass)
                     textBoxOutput.AppendText("\n\nConversion cancelled.");
                 else
+                {
                     textBoxOutput.AppendText(string.Format("\n\nffmpeg.exe exited with exit code {0}. That's usually bad.", process.ExitCode));
+                    textBoxOutput.AppendText("\nIf you have no idea what went wrong, open an issue on GitHub and copy paste the output of this window there.");
+                }
                 pictureBox.BackgroundImage = Properties.Resources.cross;
 
                 if (process.ExitCode == -1073741819) //This error keeps happening for me if I set threads to anything above 1, might happen for other people too
