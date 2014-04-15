@@ -53,6 +53,8 @@ namespace WebMConverter
             this.label20 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.label25 = new System.Windows.Forms.Label();
+            this.boxHQ = new System.Windows.Forms.CheckBox();
             this.label24 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
@@ -94,8 +96,22 @@ namespace WebMConverter
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxArguments = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.boxHQ = new System.Windows.Forms.CheckBox();
-            this.label25 = new System.Windows.Forms.Label();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
+            this.radioSubNone = new System.Windows.Forms.RadioButton();
+            this.radioSubInternal = new System.Windows.Forms.RadioButton();
+            this.radioSubExternal = new System.Windows.Forms.RadioButton();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonSubBrowse = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -119,6 +135,11 @@ namespace WebMConverter
             this.tableLayoutPanel10.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            this.tableLayoutPanel15.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.tableLayoutPanel16.SuspendLayout();
+            this.tableLayoutPanel17.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -245,6 +266,7 @@ namespace WebMConverter
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(3, 87);
@@ -444,6 +466,34 @@ namespace WebMConverter
             this.tableLayoutPanel5.Size = new System.Drawing.Size(1035, 181);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label25.Location = new System.Drawing.Point(281, 150);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(751, 31);
+            this.label25.TabIndex = 16;
+            this.label25.Text = "Will greatly increase the quality/size ratio. Be warned, this will make the conve" +
+    "rsion take forever.";
+            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // boxHQ
+            // 
+            this.boxHQ.AutoSize = true;
+            this.boxHQ.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tableLayoutPanel5.SetColumnSpan(this.boxHQ, 2);
+            this.boxHQ.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.boxHQ.Location = new System.Drawing.Point(6, 153);
+            this.boxHQ.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
+            this.boxHQ.Name = "boxHQ";
+            this.boxHQ.Size = new System.Drawing.Size(266, 25);
+            this.boxHQ.TabIndex = 15;
+            this.boxHQ.Text = "Enable high quality mode:";
+            this.boxHQ.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.boxHQ.UseVisualStyleBackColor = true;
+            this.boxHQ.CheckedChanged += new System.EventHandler(this.UpdateArguments);
+            // 
             // label24
             // 
             this.label24.AutoSize = true;
@@ -600,7 +650,7 @@ namespace WebMConverter
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 1;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel8.Size = new System.Drawing.Size(196, 30);
             this.tableLayoutPanel8.TabIndex = 7;
             // 
@@ -695,7 +745,7 @@ namespace WebMConverter
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(196, 30);
             this.tableLayoutPanel6.TabIndex = 1;
             // 
@@ -954,33 +1004,213 @@ namespace WebMConverter
             this.label21.Text = "Don\'t modify these unless you know what you\'re doing!";
             this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // boxHQ
+            // tabPage3
             // 
-            this.boxHQ.AutoSize = true;
-            this.boxHQ.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.tableLayoutPanel5.SetColumnSpan(this.boxHQ, 2);
-            this.boxHQ.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.boxHQ.Location = new System.Drawing.Point(6, 153);
-            this.boxHQ.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
-            this.boxHQ.Name = "boxHQ";
-            this.boxHQ.Size = new System.Drawing.Size(266, 25);
-            this.boxHQ.TabIndex = 15;
-            this.boxHQ.Text = "Enable high quality mode:";
-            this.boxHQ.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.boxHQ.UseVisualStyleBackColor = true;
-            this.boxHQ.CheckedChanged += new System.EventHandler(this.UpdateArguments);
+            this.tabPage3.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage3.Controls.Add(this.tableLayoutPanel15);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(1053, 324);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Subtitles";
             // 
-            // label25
+            // tableLayoutPanel15
             // 
-            this.label25.AutoSize = true;
-            this.label25.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label25.Location = new System.Drawing.Point(281, 150);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(751, 31);
-            this.label25.TabIndex = 16;
-            this.label25.Text = "Will greatly increase the quality/size ratio. Be warned, this will make the conve" +
-    "rsion take forever.";
-            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tableLayoutPanel15.ColumnCount = 1;
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel15.Controls.Add(this.groupBox6, 0, 0);
+            this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel15.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel15.Name = "tableLayoutPanel15";
+            this.tableLayoutPanel15.RowCount = 2;
+            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 38.99371F));
+            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 61.00629F));
+            this.tableLayoutPanel15.Size = new System.Drawing.Size(1047, 318);
+            this.tableLayoutPanel15.TabIndex = 0;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.tableLayoutPanel16);
+            this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox6.Location = new System.Drawing.Point(3, 3);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(1041, 117);
+            this.groupBox6.TabIndex = 0;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Subtitles";
+            // 
+            // tableLayoutPanel16
+            // 
+            this.tableLayoutPanel16.ColumnCount = 3;
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 233F));
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel16.Controls.Add(this.label31, 2, 3);
+            this.tableLayoutPanel16.Controls.Add(this.label30, 2, 2);
+            this.tableLayoutPanel16.Controls.Add(this.label29, 2, 1);
+            this.tableLayoutPanel16.Controls.Add(this.radioSubNone, 1, 0);
+            this.tableLayoutPanel16.Controls.Add(this.radioSubInternal, 1, 1);
+            this.tableLayoutPanel16.Controls.Add(this.radioSubExternal, 1, 2);
+            this.tableLayoutPanel16.Controls.Add(this.label26, 0, 0);
+            this.tableLayoutPanel16.Controls.Add(this.label27, 0, 3);
+            this.tableLayoutPanel16.Controls.Add(this.tableLayoutPanel17, 1, 3);
+            this.tableLayoutPanel16.Controls.Add(this.label28, 2, 0);
+            this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel16.Location = new System.Drawing.Point(3, 16);
+            this.tableLayoutPanel16.Name = "tableLayoutPanel16";
+            this.tableLayoutPanel16.RowCount = 4;
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel16.Size = new System.Drawing.Size(1035, 98);
+            this.tableLayoutPanel16.TabIndex = 0;
+            // 
+            // radioSubNone
+            // 
+            this.radioSubNone.AutoSize = true;
+            this.radioSubNone.Checked = true;
+            this.radioSubNone.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radioSubNone.Enabled = false;
+            this.radioSubNone.Location = new System.Drawing.Point(82, 0);
+            this.radioSubNone.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.radioSubNone.Name = "radioSubNone";
+            this.radioSubNone.Size = new System.Drawing.Size(227, 23);
+            this.radioSubNone.TabIndex = 0;
+            this.radioSubNone.TabStop = true;
+            this.radioSubNone.Text = "None";
+            this.radioSubNone.UseVisualStyleBackColor = true;
+            // 
+            // radioSubInternal
+            // 
+            this.radioSubInternal.AutoSize = true;
+            this.radioSubInternal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radioSubInternal.Enabled = false;
+            this.radioSubInternal.Location = new System.Drawing.Point(82, 23);
+            this.radioSubInternal.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.radioSubInternal.Name = "radioSubInternal";
+            this.radioSubInternal.Size = new System.Drawing.Size(227, 23);
+            this.radioSubInternal.TabIndex = 1;
+            this.radioSubInternal.Text = "Use internal";
+            this.radioSubInternal.UseVisualStyleBackColor = true;
+            // 
+            // radioSubExternal
+            // 
+            this.radioSubExternal.AutoSize = true;
+            this.radioSubExternal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radioSubExternal.Enabled = false;
+            this.radioSubExternal.Location = new System.Drawing.Point(82, 46);
+            this.radioSubExternal.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.radioSubExternal.Name = "radioSubExternal";
+            this.radioSubExternal.Size = new System.Drawing.Size(227, 23);
+            this.radioSubExternal.TabIndex = 2;
+            this.radioSubExternal.Text = "Use from file";
+            this.radioSubExternal.UseVisualStyleBackColor = true;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label26.Location = new System.Drawing.Point(3, 0);
+            this.label26.Name = "label26";
+            this.tableLayoutPanel16.SetRowSpan(this.label26, 3);
+            this.label26.Size = new System.Drawing.Size(73, 69);
+            this.label26.TabIndex = 3;
+            this.label26.Text = "Subtitles:";
+            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label27.Location = new System.Drawing.Point(3, 69);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(73, 29);
+            this.label27.TabIndex = 4;
+            this.label27.Text = "Subtitle file:";
+            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tableLayoutPanel17
+            // 
+            this.tableLayoutPanel17.ColumnCount = 2;
+            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 59F));
+            this.tableLayoutPanel17.Controls.Add(this.buttonSubBrowse, 1, 0);
+            this.tableLayoutPanel17.Controls.Add(this.textBox1, 0, 0);
+            this.tableLayoutPanel17.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel17.Location = new System.Drawing.Point(82, 69);
+            this.tableLayoutPanel17.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.tableLayoutPanel17.Name = "tableLayoutPanel17";
+            this.tableLayoutPanel17.RowCount = 1;
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel17.Size = new System.Drawing.Size(227, 29);
+            this.tableLayoutPanel17.TabIndex = 5;
+            // 
+            // buttonSubBrowse
+            // 
+            this.buttonSubBrowse.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonSubBrowse.Enabled = false;
+            this.buttonSubBrowse.Location = new System.Drawing.Point(171, 3);
+            this.buttonSubBrowse.Name = "buttonSubBrowse";
+            this.buttonSubBrowse.Size = new System.Drawing.Size(53, 23);
+            this.buttonSubBrowse.TabIndex = 0;
+            this.buttonSubBrowse.Text = "Browse";
+            this.buttonSubBrowse.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Enabled = false;
+            this.textBox1.Location = new System.Drawing.Point(3, 4);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(162, 20);
+            this.textBox1.TabIndex = 1;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label28.Location = new System.Drawing.Point(315, 0);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(717, 23);
+            this.label28.TabIndex = 6;
+            this.label28.Text = "Don\'t add any subtitles to the video.";
+            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label29.Location = new System.Drawing.Point(315, 23);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(717, 23);
+            this.label29.TabIndex = 7;
+            this.label29.Text = "Add subtitles which are taken from the input video.";
+            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label30.Location = new System.Drawing.Point(315, 46);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(717, 23);
+            this.label30.TabIndex = 8;
+            this.label30.Text = "Add subtitles which are taken from an external file. Use the box below to select " +
+    "the file.";
+            this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label31.Location = new System.Drawing.Point(315, 69);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(717, 29);
+            this.label31.TabIndex = 9;
+            this.label31.Text = "Select the subtitle file to use for the video. Supports *.ass and *.srt format.";
+            this.label31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // MainForm
             // 
@@ -1032,6 +1262,13 @@ namespace WebMConverter
             this.tableLayoutPanel12.ResumeLayout(false);
             this.tableLayoutPanel12.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackThreads)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            this.tableLayoutPanel15.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.tableLayoutPanel16.ResumeLayout(false);
+            this.tableLayoutPanel16.PerformLayout();
+            this.tableLayoutPanel17.ResumeLayout(false);
+            this.tableLayoutPanel17.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1105,6 +1342,22 @@ namespace WebMConverter
         public System.Windows.Forms.TextBox textBoxOut;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.CheckBox boxHQ;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel16;
+        private System.Windows.Forms.RadioButton radioSubNone;
+        private System.Windows.Forms.RadioButton radioSubInternal;
+        private System.Windows.Forms.RadioButton radioSubExternal;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel17;
+        private System.Windows.Forms.Button buttonSubBrowse;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label28;
     }
 }
 
