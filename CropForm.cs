@@ -74,14 +74,14 @@ namespace WebMConverter
             _generating = true;
             _ffmpegProcess = new FFmpeg(argument);
 
-            _ffmpegProcess.Process.ErrorDataReceived += (sender, args) => Console.WriteLine(args.Data);
-            _ffmpegProcess.Process.OutputDataReceived += (sender, args) => Console.WriteLine(args.Data);
+            _ffmpegProcess.ErrorDataReceived += (sender, args) => Console.WriteLine(args.Data);
+            _ffmpegProcess.OutputDataReceived += (sender, args) => Console.WriteLine(args.Data);
 
-            _ffmpegProcess.Process.Exited += (o, args) => pictureBoxVideo.Invoke((Action)(() =>
+            _ffmpegProcess.Exited += (o, args) => pictureBoxVideo.Invoke((Action)(() =>
                                                                                 {
                                                                                     _generating = false;
 
-                                                                                    int exitCode = _ffmpegProcess.Process.ExitCode;
+                                                                                    int exitCode = _ffmpegProcess.ExitCode;
 
                                                                                     if (exitCode != 0)
                                                                                     {
@@ -116,7 +116,7 @@ namespace WebMConverter
                                                                                     }
                                                                                 }));
 
-            _ffmpegProcess.Process.Start();
+            _ffmpegProcess.Start();
         }
 
         private string ConstructArguments()

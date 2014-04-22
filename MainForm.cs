@@ -10,8 +10,8 @@ namespace WebMConverter
 {
     public partial class MainForm : Form
     {
-        private string _template;
-        private string _templateArguments;
+        private readonly string _template;
+        private readonly string _templateArguments;
 
         private string _autoOutput;
         private string _autoTitle;
@@ -282,7 +282,7 @@ namespace WebMConverter
 
         private string GenerateArguments()
         {
-            string args = "";
+            //string args = "";
             int width = 0;
             int height = 0;
 

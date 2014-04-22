@@ -68,9 +68,9 @@ namespace WebMConverter
         {
             _ffmpegProcess = new FFmpeg(argument);
 
-            _ffmpegProcess.Process.ErrorDataReceived += ProcessOnErrorDataReceived;
-            _ffmpegProcess.Process.OutputDataReceived += ProcessOnOutputDataReceived;
-            _ffmpegProcess.Process.Exited += (o, args) => textBoxOutput.Invoke((Action)(() =>
+            _ffmpegProcess.ErrorDataReceived += ProcessOnErrorDataReceived;
+            _ffmpegProcess.OutputDataReceived += ProcessOnOutputDataReceived;
+            _ffmpegProcess.Exited += (o, args) => textBoxOutput.Invoke((Action)(() =>
                                                                               {
                                                                                   if (_panic) return; //This should stop that one exception when closing the converter
                                                                                   textBoxOutput.AppendText("\n--- FFMPEG HAS EXITED ---");
@@ -91,9 +91,9 @@ namespace WebMConverter
 
             _ffmpegProcess = new FFmpeg(arguments[currentPass]);
 
-            _ffmpegProcess.Process.ErrorDataReceived += ProcessOnErrorDataReceived;
-            _ffmpegProcess.Process.OutputDataReceived += ProcessOnOutputDataReceived;
-            _ffmpegProcess.Process.Exited += (o, args) => textBoxOutput.Invoke((Action)(() =>
+            _ffmpegProcess.ErrorDataReceived += ProcessOnErrorDataReceived;
+            _ffmpegProcess.OutputDataReceived += ProcessOnOutputDataReceived;
+            _ffmpegProcess.Exited += (o, args) => textBoxOutput.Invoke((Action)(() =>
             {
                 if (_panic) return; //This should stop that one exception when closing the converter
                 textBoxOutput.AppendText("\n--- FFMPEG HAS EXITED ---");
@@ -122,7 +122,7 @@ namespace WebMConverter
         {
             _timer.Stop();
 
-            var process = _ffmpegProcess.Process;
+            var process = _ffmpegProcess;
 
             if (process.ExitCode != 0)
             {
@@ -157,8 +157,8 @@ namespace WebMConverter
 
             if (!_ended || _panic) //Prevent stack overflow
             {
-                if (!_ffmpegProcess.Process.HasExited)
-                    _ffmpegProcess.Process.Kill();
+                if (!_ffmpegProcess.HasExited)
+                    _ffmpegProcess.Kill();
             }
             else
                 Close();
@@ -172,7 +172,7 @@ namespace WebMConverter
 
         private void ConverterForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            _ffmpegProcess.Process.Dispose();
+            _ffmpegProcess.Dispose();
         }
 
         private void buttonPlay_Click(object sender, EventArgs e)

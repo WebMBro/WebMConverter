@@ -60,7 +60,9 @@
     <Compile Include="CropForm.Designer.cs">
       <DependentUpon>CropForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FFmpeg.cs" />
+    <Compile Include="FFmpeg.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
