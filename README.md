@@ -1,6 +1,6 @@
 WebMConverter
 =============
-WebM for retards. Basically, a wrapper around ffmpeg made for converting videos to WebM without having to use the command line.
+WebM, easy. Basically, a wrapper around ffmpeg made for converting videos to WebM without having to use the command line.
 
 Download it [here](https://github.com/WebMBro/WebMConverter/releases).
 Download the latest Converter.zip.
