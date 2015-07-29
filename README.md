@@ -3,11 +3,11 @@ WebMConverter
 __Update: as you might have noticed, development is dead. If you're looking for subtitle support, try [nixxquality's fork](https://github.com/nixxquality/WebMConverter).__
 
 
-WebM for [censored]. Basically, a wrapper around ffmpeg made for converting videos to WebM without having to use the command line.
+WebM for bakas. Basically, a wrapper around ffmpeg made for converting videos to WebM without having to use the command line.
 
 Download it [here](https://github.com/WebMBro/WebMConverter/releases).
 Download the latest Converter.zip.
-Don't run ffmpeg.exe you [censored], run WebMConverter.exe.
+Don't run ffmpeg.exe you baka, run WebMConverter.exe.
 And I shouldn't have to tell you to extract the zip file first.
 Also, don't click "Download ZIP" on the right side of the page, that'll only download the source. (unless you want to compile it yourself, obviously)
 
