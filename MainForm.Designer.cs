@@ -1225,7 +1225,7 @@ namespace WebMConverter
             this.MinimumSize = new System.Drawing.Size(975, 270);
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(3);
-            this.Text = "WebM for***REMOVED***s";
+            this.Text = "WebM for [censored]";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
