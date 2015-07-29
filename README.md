@@ -1,5 +1,8 @@
 WebMConverter
 =============
+__Update: as you might have noticed, development is dead. If you're looking for subtitle support, try [nixxquality's fork](https://github.com/nixxquality/WebMConverter).__
+
+
 WebM for [censored]. Basically, a wrapper around ffmpeg made for converting videos to WebM without having to use the command line.
 
 Download it [here](https://github.com/WebMBro/WebMConverter/releases).
